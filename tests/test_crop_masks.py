@@ -5,10 +5,12 @@ import pytest
 
 import crop_masks as cm
 
+FIELD = cm.SOURCES["sigpac-ib"]["use_field"]
+
 
 def parcel(i, use):
     x = 3.0 + i * 0.001
-    return {"type": "Feature", "properties": {"USO_SIGPAC": use},
+    return {"type": "Feature", "properties": {FIELD: use},
             "geometry": {"type": "Polygon", "coordinates": [[[x, 39.5], [x + 0.0005, 39.5],
                                                              [x + 0.0005, 39.5005], [x, 39.5]]]}}
 
@@ -26,7 +28,7 @@ class FakeService:
         if where != "1=1" and self.refuse:
             raise cm.MaskError("service error: invalid where")
         rows = self.parcels if where == "1=1" else [
-            p for p in self.parcels if f"'{p['properties']['USO_SIGPAC']}'" in where]
+            p for p in self.parcels if f"'{p['properties'][FIELD]}'" in where]
         off = params["resultOffset"]
         chunk = rows[off:off + self.page]
         return {"type": "FeatureCollection", "features": chunk,
@@ -46,7 +48,7 @@ def test_server_filter_with_pagination(parcels, monkeypatch):
     assert len(got) == 600 * 5
     assert {f["properties"]["use"] for f in got} == {"FS", "FL", "FV"}
     # three full pages, plus at most one empty check when a page comes back exactly full
-    assert len(svc.calls) in (3, 4) and all(c["where"].startswith("USO_SIGPAC IN") for c in svc.calls)
+    assert len(svc.calls) in (3, 4) and all(c["where"].startswith(f"{FIELD} IN") for c in svc.calls)
     assert [c["resultOffset"] for c in svc.calls][:3] == [0, 1000, 2000]
 
 
