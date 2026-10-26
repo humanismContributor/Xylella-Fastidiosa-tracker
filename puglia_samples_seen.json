@@ -1,0 +1,20 @@
+{
+ "checked": "2026-10-26",
+ "metadata_modified": "2025-12-23T14:46:40.498388",
+ "resources": {
+  "fe41c298-e6b4-4728-ba19-50d17e411372": {
+   "name": "CAMP_2020_2022.csv",
+   "url": "https://dati.puglia.it/ckan/dataset/6d0fb7c5-e197-4c16-bec9-4986011c05b6/resource/fe41c298-e6b4-4728-ba19-50d17e411372/download/camp_2020_2022.csv",
+   "last_modified": "2024-12-17T17:04:36.058306",
+   "created": "2024-12-17T17:04:36.097417",
+   "size": 81999815
+  },
+  "2ffb6c35-bae0-4890-abc1-0bc0b87a6eb9": {
+   "name": "CAMP_2020_2023.csv",
+   "url": "",
+   "last_modified": "2025-09-12T00:00:00",
+   "created": "2025-09-12T06:58:40.745686",
+   "size": null
+  }
+ }
+}

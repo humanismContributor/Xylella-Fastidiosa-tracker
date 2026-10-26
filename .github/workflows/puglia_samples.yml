@@ -1,0 +1,46 @@
+name: Weekly Puglia Sampling Data Check
+
+# Watches Regione Puglia's open Xylella sampling data on dati.puglia.it (the
+# field samples calibrate_scanner.py uses) and opens a GitHub issue when a file
+# is added, gets a download link or changes date, with the steps to re-run the
+# calibration. The first run only records what already exists.
+
+on:
+  schedule:
+    - cron: '29 7 * * 4'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: xylella-puglia-samples
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check Puglia sampling data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python puglia_samples_check.py
+      - name: Save what has been seen
+        run: |
+          set -e
+          git config user.name "Automated Satellite Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add puglia_samples_seen.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Puglia sampling data check: update seen state"
+            git pull --rebase origin main
+            git push origin main
+          fi
