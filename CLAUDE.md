@@ -17,6 +17,11 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   cell for every season since 2017, plus land mask and fire flags, in `data/calibration/osavi/`.
   Enough to replay the decline rules offline with other thresholds; tune there, not by editing
   `PARAMS` and rebuilding.
+- `replay_rules.py` (run by hand): replays the current decline rule and ~140 alternatives on those
+  tables, chooses on one part (seasons up to 2020, or one region) and scores on the other, with a
+  100 m block bootstrap. Writes `data/calibration/rule_replay.json`. First run (Oct 2026, 2020–23
+  samples): no rule beats the current one in the sampling season; greenness-dependent thresholds
+  add nothing over fixed ones. Re-run after new campaigns before changing `PARAMS`.
 - `puglia_samples_check.py`: weekly check of the sampling dataset on dati.puglia.it (CKAN API,
   workflow `puglia_samples.yml`, state in `puglia_samples_seen.json`). Opens one issue when a file
   is added, gets a download link or changes date, with the steps to re-run the calibration; it
@@ -42,6 +47,8 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
 - Run one region locally (needs the conda packages from `main.yml`): `python xylella_scanner.py --region puglia-ostuni`
 - Build a crop mask: `python crop_masks.py --region mallorca-pla`
 - Check the scanner against field samples (numpy only): `python calibrate_scanner.py --download`
+- After new sampling data: `python calibrate_scanner.py --download`, run the `sample_osavi.yml`
+  workflow with `all`, then `python calibrate_scanner.py` and `python replay_rules.py`
 
 ## Working conventions
 - Work on a branch and open a pull request; `main` is what the public app shows.
