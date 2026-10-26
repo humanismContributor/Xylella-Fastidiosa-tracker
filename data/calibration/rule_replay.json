@@ -1,0 +1,667 @@
+{
+  "generated": "2026-10-26",
+  "source": {
+    "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
+    "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
+    "license": "CC BY 4.0"
+  },
+  "tables": {
+    "puglia-monopoli-polignano": {
+      "table_generated": "2026-10-26",
+      "samples": 50033,
+      "positives": 218,
+      "years": [
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ]
+    },
+    "puglia-monopoli-fasano": {
+      "table_generated": "2026-10-26",
+      "samples": 75355,
+      "positives": 179,
+      "years": [
+        2017,
+        2018,
+        2019,
+        2020,
+        2021,
+        2022,
+        2023,
+        2024,
+        2025,
+        2026
+      ]
+    }
+  },
+  "rules_tested": 154,
+  "selection": "highest Youden's J (sensitivity - false-positive rate) on the training part",
+  "scored": "judged cells only; patch-size filter not applied",
+  "bootstrap": "1000 resamples of 100 m blocks",
+  "results": [
+    {
+      "lag": 0,
+      "splits": [
+        {
+          "split": "temporal puglia-monopoli-polignano: <= 2020 -> > 2020",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 6831,
+              "positive": 51,
+              "flagged_share": 0.0665,
+              "sensitivity": 0.2549,
+              "false_positive_rate": 0.065,
+              "youden_j": 0.1899,
+              "relative_risk": 4.81
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.03",
+              "trees": 6831,
+              "positive": 51,
+              "flagged_share": 0.2938,
+              "sensitivity": 0.8235,
+              "false_positive_rate": 0.2898,
+              "youden_j": 0.5337,
+              "relative_risk": 11.22
+            },
+            "best_split": {
+              "rule": "split@0.18 rel>=0.15/0.20 abs>=0.02",
+              "trees": 6831,
+              "positive": 51,
+              "flagged_share": 0.1476,
+              "sensitivity": 0.5294,
+              "false_positive_rate": 0.1447,
+              "youden_j": 0.3847,
+              "relative_risk": 6.5
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0094,
+              "sensitivity": 0.0361,
+              "false_positive_rate": 0.0094,
+              "youden_j": 0.0268,
+              "relative_risk": 3.94
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.03",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0431,
+              "sensitivity": 0.0964,
+              "false_positive_rate": 0.043,
+              "youden_j": 0.0534,
+              "relative_risk": 2.37,
+              "delta_j_vs_current_ci95": [
+                -0.019,
+                0.0649
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.18 rel>=0.15/0.20 abs>=0.02",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0238,
+              "sensitivity": 0.0964,
+              "false_positive_rate": 0.0236,
+              "youden_j": 0.0728,
+              "relative_risk": 4.38,
+              "delta_j_vs_current_ci95": [
+                -0.0141,
+                0.1192
+              ]
+            }
+          }
+        },
+        {
+          "split": "temporal puglia-monopoli-fasano: <= 2020 -> > 2020",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 24491,
+              "positive": 20,
+              "flagged_share": 0.0177,
+              "sensitivity": 0.0,
+              "false_positive_rate": 0.0177,
+              "youden_j": -0.0177,
+              "relative_risk": 0.0
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.40 abs>=0.02",
+              "trees": 24491,
+              "positive": 20,
+              "flagged_share": 0.0035,
+              "sensitivity": 0.0,
+              "false_positive_rate": 0.0035,
+              "youden_j": -0.0035,
+              "relative_risk": 0.0
+            },
+            "best_split": {
+              "rule": "split@0.20 rel>=0.10/0.35 abs>=0.03",
+              "trees": 24491,
+              "positive": 20,
+              "flagged_share": 0.0112,
+              "sensitivity": 0.05,
+              "false_positive_rate": 0.0112,
+              "youden_j": 0.0388,
+              "relative_risk": 4.65
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0219,
+              "sensitivity": 0.0094,
+              "false_positive_rate": 0.0219,
+              "youden_j": -0.0125,
+              "relative_risk": 0.43
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.40 abs>=0.02",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0062,
+              "sensitivity": 0.0,
+              "false_positive_rate": 0.0062,
+              "youden_j": -0.0062,
+              "relative_risk": 0.0,
+              "delta_j_vs_current_ci95": [
+                -0.0176,
+                0.0173
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.20 rel>=0.10/0.35 abs>=0.03",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0185,
+              "sensitivity": 0.0283,
+              "false_positive_rate": 0.0185,
+              "youden_j": 0.0098,
+              "relative_risk": 1.54,
+              "delta_j_vs_current_ci95": [
+                0.0029,
+                0.0581
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-polignano -> puglia-monopoli-fasano",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0193,
+              "sensitivity": 0.1194,
+              "false_positive_rate": 0.0189,
+              "youden_j": 0.1005,
+              "relative_risk": 6.91
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0961,
+              "sensitivity": 0.3955,
+              "false_positive_rate": 0.0951,
+              "youden_j": 0.3005,
+              "relative_risk": 6.16
+            },
+            "best_split": {
+              "rule": "split@0.18 rel>=0.15/0.20 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0451,
+              "sensitivity": 0.2612,
+              "false_positive_rate": 0.0444,
+              "youden_j": 0.2168,
+              "relative_risk": 7.49
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0203,
+              "sensitivity": 0.0079,
+              "false_positive_rate": 0.0204,
+              "youden_j": -0.0124,
+              "relative_risk": 0.39
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.1147,
+              "sensitivity": 0.127,
+              "false_positive_rate": 0.1146,
+              "youden_j": 0.0123,
+              "relative_risk": 1.12,
+              "delta_j_vs_current_ci95": [
+                -0.0445,
+                0.1328
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.18 rel>=0.15/0.20 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0564,
+              "sensitivity": 0.0556,
+              "false_positive_rate": 0.0564,
+              "youden_j": -0.0008,
+              "relative_risk": 0.98,
+              "delta_j_vs_current_ci95": [
+                -0.0291,
+                0.0713
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-fasano -> puglia-monopoli-polignano",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0203,
+              "sensitivity": 0.0079,
+              "false_positive_rate": 0.0204,
+              "youden_j": -0.0124,
+              "relative_risk": 0.39
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.1147,
+              "sensitivity": 0.127,
+              "false_positive_rate": 0.1146,
+              "youden_j": 0.0123,
+              "relative_risk": 1.12
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.10/0.30 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0509,
+              "sensitivity": 0.0952,
+              "false_positive_rate": 0.0508,
+              "youden_j": 0.0444,
+              "relative_risk": 1.96
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0193,
+              "sensitivity": 0.1194,
+              "false_positive_rate": 0.0189,
+              "youden_j": 0.1005,
+              "relative_risk": 6.91
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0961,
+              "sensitivity": 0.3955,
+              "false_positive_rate": 0.0951,
+              "youden_j": 0.3005,
+              "relative_risk": 6.16,
+              "delta_j_vs_current_ci95": [
+                0.0309,
+                0.368
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.10/0.30 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0453,
+              "sensitivity": 0.1866,
+              "false_positive_rate": 0.0448,
+              "youden_j": 0.1417,
+              "relative_risk": 4.83,
+              "delta_j_vs_current_ci95": [
+                -0.0168,
+                0.1289
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "lag": 1,
+      "splits": [
+        {
+          "split": "temporal puglia-monopoli-polignano: <= 2020 -> > 2020",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 6831,
+              "positive": 51,
+              "flagged_share": 0.1003,
+              "sensitivity": 0.7255,
+              "false_positive_rate": 0.0956,
+              "youden_j": 0.6299,
+              "relative_risk": 23.71
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.20 abs>=0.04",
+              "trees": 6831,
+              "positive": 51,
+              "flagged_share": 0.2143,
+              "sensitivity": 0.902,
+              "false_positive_rate": 0.2091,
+              "youden_j": 0.6928,
+              "relative_risk": 33.73
+            },
+            "best_split": {
+              "rule": "split@0.18 rel>=0.10/0.20 abs>=0.04",
+              "trees": 6831,
+              "positive": 51,
+              "flagged_share": 0.2143,
+              "sensitivity": 0.902,
+              "false_positive_rate": 0.2091,
+              "youden_j": 0.6928,
+              "relative_risk": 33.73
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0195,
+              "sensitivity": 0.2771,
+              "false_positive_rate": 0.0189,
+              "youden_j": 0.2582,
+              "relative_risk": 19.26
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.20 abs>=0.04",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0482,
+              "sensitivity": 0.3735,
+              "false_positive_rate": 0.0474,
+              "youden_j": 0.3261,
+              "relative_risk": 11.78,
+              "delta_j_vs_current_ci95": [
+                0.006,
+                0.1423
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.18 rel>=0.10/0.20 abs>=0.04",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0482,
+              "sensitivity": 0.3735,
+              "false_positive_rate": 0.0474,
+              "youden_j": 0.3261,
+              "relative_risk": 11.78,
+              "delta_j_vs_current_ci95": [
+                0.006,
+                0.1423
+              ]
+            }
+          }
+        },
+        {
+          "split": "temporal puglia-monopoli-fasano: <= 2020 -> > 2020",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 24491,
+              "positive": 20,
+              "flagged_share": 0.0619,
+              "sensitivity": 0.15,
+              "false_positive_rate": 0.0618,
+              "youden_j": 0.0882,
+              "relative_risk": 2.68
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.15 abs>=0.03",
+              "trees": 24491,
+              "positive": 20,
+              "flagged_share": 0.2432,
+              "sensitivity": 0.65,
+              "false_positive_rate": 0.2429,
+              "youden_j": 0.4071,
+              "relative_risk": 5.78
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.15/0.35 abs>=0.03",
+              "trees": 24491,
+              "positive": 20,
+              "flagged_share": 0.0863,
+              "sensitivity": 0.6,
+              "false_positive_rate": 0.0859,
+              "youden_j": 0.5141,
+              "relative_risk": 15.89
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0282,
+              "sensitivity": 0.0189,
+              "false_positive_rate": 0.0282,
+              "youden_j": -0.0094,
+              "relative_risk": 0.66
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.15 abs>=0.03",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.1024,
+              "sensitivity": 0.1792,
+              "false_positive_rate": 0.1022,
+              "youden_j": 0.077,
+              "relative_risk": 1.91,
+              "delta_j_vs_current_ci95": [
+                0.0021,
+                0.2016
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.15/0.35 abs>=0.03",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0439,
+              "sensitivity": 0.1038,
+              "false_positive_rate": 0.0437,
+              "youden_j": 0.06,
+              "relative_risk": 2.52,
+              "delta_j_vs_current_ci95": [
+                0.0066,
+                0.1504
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-polignano -> puglia-monopoli-fasano",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0334,
+              "sensitivity": 0.4478,
+              "false_positive_rate": 0.032,
+              "youden_j": 0.4157,
+              "relative_risk": 23.44
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.1611,
+              "sensitivity": 0.7388,
+              "false_positive_rate": 0.1591,
+              "youden_j": 0.5797,
+              "relative_risk": 14.73
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.10/0.20 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.108,
+              "sensitivity": 0.6567,
+              "false_positive_rate": 0.1062,
+              "youden_j": 0.5505,
+              "relative_risk": 15.8
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0407,
+              "sensitivity": 0.0397,
+              "false_positive_rate": 0.0407,
+              "youden_j": -0.001,
+              "relative_risk": 0.97
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.10 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.2159,
+              "sensitivity": 0.3095,
+              "false_positive_rate": 0.2157,
+              "youden_j": 0.0938,
+              "relative_risk": 1.63,
+              "delta_j_vs_current_ci95": [
+                0.0161,
+                0.1957
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.10/0.20 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.142,
+              "sensitivity": 0.254,
+              "false_positive_rate": 0.1418,
+              "youden_j": 0.1122,
+              "relative_risk": 2.06,
+              "delta_j_vs_current_ci95": [
+                0.0337,
+                0.2079
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-fasano -> puglia-monopoli-polignano",
+          "chosen_on_train": {
+            "current": {
+              "rule": "current",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0407,
+              "sensitivity": 0.0397,
+              "false_positive_rate": 0.0407,
+              "youden_j": -0.001,
+              "relative_risk": 0.97
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.15 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.1573,
+              "sensitivity": 0.2619,
+              "false_positive_rate": 0.1571,
+              "youden_j": 0.1049,
+              "relative_risk": 1.9
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.10/0.30 abs>=0.02",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.096,
+              "sensitivity": 0.246,
+              "false_positive_rate": 0.0957,
+              "youden_j": 0.1503,
+              "relative_risk": 3.07
+            }
+          },
+          "test": {
+            "current": {
+              "rule": "current",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0334,
+              "sensitivity": 0.4478,
+              "false_positive_rate": 0.032,
+              "youden_j": 0.4157,
+              "relative_risk": 23.44
+            },
+            "best_fixed": {
+              "rule": "fixed rel>=0.15 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.1164,
+              "sensitivity": 0.6791,
+              "false_positive_rate": 0.1145,
+              "youden_j": 0.5646,
+              "relative_risk": 16.06,
+              "delta_j_vs_current_ci95": [
+                0.0709,
+                0.2413
+              ]
+            },
+            "best_split": {
+              "rule": "split@0.25 rel>=0.10/0.30 abs>=0.02",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0788,
+              "sensitivity": 0.5821,
+              "false_positive_rate": 0.0771,
+              "youden_j": 0.505,
+              "relative_risk": 16.29,
+              "delta_j_vs_current_ci95": [
+                0.0175,
+                0.1813
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "caveats": [
+    "Sampling is targeted, not random: inspectors favour symptomatic trees and the buffer and containment zones, and stop sampling once an area is declared infected.",
+    "Cells the scanner never judges (built-up land, non-WorldCover classes) count as not flagged, because state.npz does not store the land mask.",
+    "Outside the infected zone, positive trees must be removed, and in eradication areas also the host plants within 50 m (Reg. (EU) 2020/1201, https://eur-lex.europa.eu/eli/reg_impl/2020/1201/oj). Removal looks like decline to the scanner. A flag in the season after a positive (lag 1) may show the eradication rather than the disease.",
+    "About a third of positives had no symptoms; no canopy-based method can see those.",
+    "Coordinates are those recorded by the inspectors; a tree near a cell edge may be matched to the wrong cell, which the 3 x 3 window only partly absorbs."
+  ]
+}
