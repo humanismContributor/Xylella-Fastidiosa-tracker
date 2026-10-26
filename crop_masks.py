@@ -39,7 +39,8 @@ USER_AGENT = "xylella-watch/1.0 (crop masks; github.com)"
 SOURCES = {
     "sigpac-ib": {
         "url": "https://ideib.caib.es/geoserveis/rest/services/public/GOIB_SIGPAC_IB/MapServer/1/query",
-        "use_field": "USO_SIGPAC",
+        # the layer is a joined view, so field names carry the table prefix
+        "use_field": "SIGPAC_FOGAIBA.USO_SIGPAC",
         "page_size": 2000,
         "title": "SIGPAC Illes Balears (Govern de les Illes Balears, IDEIB)",
         "source_url": "https://ideib.caib.es/geoserveis/rest/services/public/GOIB_SIGPAC_IB/MapServer",
