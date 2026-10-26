@@ -22,6 +22,10 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   100 m block bootstrap. Writes `data/calibration/rule_replay.json`. First run (Oct 2026, 2020–23
   samples): no rule beats the current one in the sampling season; greenness-dependent thresholds
   add nothing over fixed ones. Re-run after new campaigns before changing `PARAMS`.
+- `puglia_samples_check.py`: weekly check of the sampling dataset on dati.puglia.it (CKAN API,
+  workflow `puglia_samples.yml`, state in `puglia_samples_seen.json`). Opens one issue when a file
+  is added, gets a download link or changes date, with the steps to re-run the calibration; it
+  never downloads the data or changes `SAMPLES_URL` itself.
 - `eppo_check.py`: weekly EPPO check that opens GitHub issues (workflow `eppo.yml`). Records are
   added to `official_outbreaks.json` / `country_status.json` by hand after review, never automatically.
 - `literature_check.py`: weekly OpenAlex search for new Xylella papers, one digest issue per week and
