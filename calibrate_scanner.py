@@ -86,7 +86,7 @@ def read_samples(text: io.TextIOBase, species_prefix: str | None = SPECIES_PREFI
     Rows without coordinates or a clear result are skipped."""
     header = text.readline().strip().split(";")
     col = {name: i for i, name in enumerate(header)}
-    lat, lon, season, pos, sym, skipped = [], [], [], [], [], 0
+    ids, dates, lat, lon, season, pos, sym, skipped = [], [], [], [], [], [], [], 0
     for line in text:
         p = line.rstrip("\r\n").split(";")
         if len(p) != len(header):
@@ -104,12 +104,15 @@ def read_samples(text: io.TextIOBase, species_prefix: str | None = SPECIES_PREFI
         except ValueError:
             skipped += 1
             continue
+        ids.append(p[col["ID"]].strip())
+        dates.append(date.isoformat())
         lat.append(la)
         lon.append(lo)
         season.append(sample_season(date))
         pos.append(result == "positivo")
         sym.append(p[col["SINTOMO"]].strip().lower() == "presente")
-    return {"lat": np.array(lat), "lon": np.array(lon), "season": np.array(season, int),
+    return {"id": np.array(ids), "date": np.array(dates),
+            "lat": np.array(lat), "lon": np.array(lon), "season": np.array(season, int),
             "positive": np.array(pos, bool), "symptomatic": np.array(sym, bool), "skipped": skipped}
 
 

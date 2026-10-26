@@ -1,0 +1,69 @@
+name: Sample OSAVI at Field Samples
+
+# Manual only. Saves the summer OSAVI at every tree in Regione Puglia's open
+# sampling data that falls inside a scan region (sample_osavi.py), for offline
+# calibration of the decline rules. Reads the scanner's state, never changes it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      region:
+        description: "Region id from regions.json, or 'all'"
+        required: true
+        default: "puglia-monopoli-polignano"
+
+permissions:
+  contents: write
+
+# Shares the weekly scan's group, so the two never push at the same time
+concurrency:
+  group: xylella-scan
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Mambaforge (Geospatial Environment)
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          miniforge-version: latest
+          activate-environment: xylella_env
+          channels: conda-forge
+          python-version: "3.11"
+
+      - name: Install Geospatial Python Packages
+        run: |
+          mamba install -y numpy scipy xarray dask rasterio pystac-client odc-stac odc-geo planetary-computer
+
+      - name: Download the regional sampling data
+        run: python calibrate_scanner.py --download
+
+      - name: Extract OSAVI at sampled trees
+        run: |
+          if [ "${{ inputs.region }}" = "all" ]; then
+            python sample_osavi.py --all
+          else
+            python sample_osavi.py --region "${{ inputs.region }}"
+          fi
+
+      - name: Commit the tables
+        run: |
+          set -e
+          git config user.name "Automated Satellite Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/calibration/osavi
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Automated Sync: OSAVI at field samples (${{ inputs.region }})"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

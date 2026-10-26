@@ -1,0 +1,126 @@
+{
+  "region": "puglia-monopoli-polignano",
+  "name": "Monopoli – Polignano a Mare (BA), Puglia",
+  "generated": "2026-10-26",
+  "source": {
+    "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
+    "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
+    "license": "CC BY 4.0"
+  },
+  "imagery": "Sentinel-2 L2A, Microsoft Planetary Computer; same composites as xylella_scanner.load_season",
+  "grid": {
+    "crs": "EPSG:32633",
+    "transform": [
+      10.0,
+      0.0,
+      683340.0,
+      0.0,
+      -10.0,
+      4541310.0
+    ],
+    "shape": [
+      804,
+      1031
+    ],
+    "pixel_m": 10
+  },
+  "window_px": 3,
+  "profile": "olive",
+  "rules": {
+    "season": [
+      "07-01",
+      "08-31"
+    ],
+    "baseline_osavi_min": 0.12,
+    "baseline_osavi_max": 0.5,
+    "min_rel_drop": 0.3,
+    "min_abs_drop": 0.04,
+    "baseline_years": 1,
+    "max_baseline_spread": null,
+    "recovery_share": 0.5
+  },
+  "scanner_params": {
+    "first_season": 2019,
+    "season": [
+      "07-01",
+      "08-31"
+    ],
+    "scene_cloud_max": 30,
+    "min_dates": 3,
+    "valid_scl": [
+      4,
+      5
+    ],
+    "reflectance_offset": 1000,
+    "baseline_osavi_min": 0.12,
+    "baseline_osavi_max": 0.5,
+    "min_rel_drop": 0.3,
+    "min_abs_drop": 0.04,
+    "max_baseline_rise": 0.25,
+    "recovery_share": 0.5,
+    "keep_worldcover": [
+      10,
+      20,
+      30,
+      40
+    ],
+    "builtup_buffer_px": 2,
+    "min_area_m2": 300,
+    "parcel_extent": 0.75,
+    "parcel_min_m2": 2000,
+    "burned_area_filter": "modis-64A1-061",
+    "burned_window": "from the start of the baseline summer"
+  },
+  "scanner_params_hash": "68ba29faa15ded0f",
+  "state_params_hash": "68ba29faa15ded0f",
+  "years": [
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025,
+    2026
+  ],
+  "scenes": {
+    "2017": 11,
+    "2018": 10,
+    "2019": 10,
+    "2020": 10,
+    "2021": 12,
+    "2022": 9,
+    "2023": 12,
+    "2024": 10,
+    "2025": 14,
+    "2026": 17
+  },
+  "masks": {
+    "worldcover": "ESA WorldCover 2021",
+    "crop_mask": null,
+    "worldcover_share_kept": 0.557,
+    "burned_area": "MODIS burned area (MCD64A1): 0 cell-seasons excluded"
+  },
+  "samples": 50033,
+  "positives": 218,
+  "columns": {
+    "id": "sample ID in the regional data set",
+    "date": "sampling date",
+    "season": "scanner season the sample is compared with (calibrate_scanner.sample_season)",
+    "positive": "1 if the lab result was positive",
+    "symptomatic": "1 if the inspector recorded symptoms",
+    "lat": "latitude as recorded",
+    "lon": "longitude as recorded",
+    "row": "row of the tree's cell on the region grid",
+    "col": "column of the tree's cell",
+    "judged": "1 if the scanner's land mask lets it judge this cell",
+    "judged3": "share of the 3 x 3 window the land mask lets it judge",
+    "flag_bits": "effective scanner flags of the cell at extraction time (bit k = season 2010 + k)",
+    "flag_bits3": "the same, OR-ed over the 3 x 3 window",
+    "osavi_<year>": "median July-August OSAVI of the tree's cell (empty: too few clear dates)",
+    "osavi3_<year>": "median of the 3 x 3 window's seasonal values",
+    "burned_<season>": "1 if MODIS mapped the cell as burned in the scanner's fire window, empty if unknown"
+  }
+}

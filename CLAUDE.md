@@ -13,6 +13,10 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   CC BY 4.0, positives and negatives, 2020–2023) to the scanner's flags in `state.npz` and writes
   `data/calibration/`. Reads state only, so it never triggers a rebuild. The 82 MB CSV is cached in
   `.cache/` and not committed.
+- `sample_osavi.py` (workflow `sample_osavi.yml`, manual): the summer OSAVI of every sampled tree's
+  cell for every season since 2017, plus land mask and fire flags, in `data/calibration/osavi/`.
+  Enough to replay the decline rules offline with other thresholds; tune there, not by editing
+  `PARAMS` and rebuilding.
 - `eppo_check.py`: weekly EPPO check that opens GitHub issues (workflow `eppo.yml`). Records are
   added to `official_outbreaks.json` / `country_status.json` by hand after review, never automatically.
 - `literature_check.py`: weekly OpenAlex search for new Xylella papers, one digest issue per week and
