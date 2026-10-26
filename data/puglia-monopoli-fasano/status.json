@@ -1,0 +1,62 @@
+{
+  "region": "puglia-monopoli-fasano",
+  "name": "Monopoli (BA) – Fasano (BR), Puglia",
+  "scan_date": "2026-10-26",
+  "last_checked": "2026-10-26",
+  "latest_season": 2026,
+  "season_complete": true,
+  "season_window": "07-01 to 08-31",
+  "profile": "olive",
+  "profile_label": "Olive",
+  "profile_reliability": "literature-based",
+  "profile_notes": "Evergreen, steady summer greenness; olive quick decline is progressive and trees don't recover. Drop thresholds from Scala et al. 2024 and Hornero et al. 2020.",
+  "compared_with": 2025,
+  "result": "ok",
+  "totals_ha": {
+    "new": 61.72,
+    "continuing": 11.99,
+    "earlier": 494.64
+  },
+  "polygons": 8382,
+  "baseline_share_in_range": 0.878,
+  "masks": {
+    "worldcover": "ESA WorldCover 2021",
+    "crop_mask": null,
+    "worldcover_share_kept": 0.678,
+    "burned_area": "MODIS burned area (MCD64A1): 0 cell-seasons excluded"
+  },
+  "parameters": {
+    "first_season": 2019,
+    "season": [
+      "07-01",
+      "08-31"
+    ],
+    "scene_cloud_max": 30,
+    "min_dates": 3,
+    "valid_scl": [
+      4,
+      5
+    ],
+    "reflectance_offset": 1000,
+    "baseline_osavi_min": 0.12,
+    "baseline_osavi_max": 0.5,
+    "min_rel_drop": 0.3,
+    "min_abs_drop": 0.04,
+    "max_baseline_rise": 0.25,
+    "recovery_share": 0.5,
+    "keep_worldcover": [
+      10,
+      20,
+      30,
+      40
+    ],
+    "builtup_buffer_px": 2,
+    "min_area_m2": 300,
+    "parcel_extent": 0.75,
+    "parcel_min_m2": 2000,
+    "burned_area_filter": "modis-64A1-061",
+    "burned_window": "from the start of the baseline summer",
+    "baseline_years": 1,
+    "max_baseline_spread": null
+  }
+}

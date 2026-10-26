@@ -29,6 +29,19 @@
       "enabled": true
     },
     {
+      "id": "puglia-monopoli-fasano",
+      "name": "Monopoli (BA) – Fasano (BR), Puglia",
+      "country": "Italy",
+      "bbox": [17.28, 40.86, 17.40, 40.92],
+      "crop": "olive",
+      "role": "front",
+      "official_status": "Advancing edge of the pauca outbreak, south-east of Monopoli–Polignano. The Region's inspectors sampled 71,769 olive trees here from 2020 to mid-2023 and found 179 positive (168 in Fasano, 11 in Monopoli), with positives in every campaign year. Added as a second area for checking the scanner against official results.",
+      "sources": [
+        {"title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa, campaigns 2020–2023 (CC BY 4.0)", "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa"}
+      ],
+      "enabled": true
+    },
+    {
       "id": "puglia-bisceglie",
       "name": "Bisceglie (BT), Puglia",
       "country": "Italy",

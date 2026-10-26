@@ -45,6 +45,25 @@
       }
     },
     {
+      "region": "puglia-monopoli-fasano",
+      "samples_on_grid": 75355,
+      "positives_on_grid": 179,
+      "lag0": {
+        "flagged_share": 0.1166,
+        "sensitivity": 0.0726,
+        "positive_rate_flagged": 0.0015,
+        "positive_rate_unflagged": 0.0025,
+        "relative_risk": 0.59
+      },
+      "lag1": {
+        "flagged_share": 0.1606,
+        "sensitivity": 0.0894,
+        "positive_rate_flagged": 0.0013,
+        "positive_rate_unflagged": 0.0026,
+        "relative_risk": 0.51
+      }
+    },
+    {
       "region": "puglia-bisceglie",
       "samples_on_grid": 315,
       "positives_on_grid": 0,
