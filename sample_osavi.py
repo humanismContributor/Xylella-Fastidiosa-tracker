@@ -147,7 +147,8 @@ def write_table(path: Path, header, rows) -> None:
 # --------------------------------------------------------------------------
 # Satellite side (conda environment)
 # --------------------------------------------------------------------------
-def extract_region(region: dict, samples: dict, today: dt.date, radius: int = RADIUS_PX) -> dict | None:
+def extract_region(region: dict, samples: dict, today: dt.date, radius: int = RADIUS_PX,
+                   out_dir: Path = OUT_DIR) -> dict | None:
     profile = region.get("profile", "olive")
     if profile != "olive":
         print(f"{region['id']}: skipped, the regional samples are matched to olive regions only")
@@ -196,7 +197,7 @@ def extract_region(region: dict, samples: dict, today: dt.date, radius: int = RA
 
     header, out = table(samples, idx, rows, cols, own, win, landmask[rows, cols],
                         window_mean(landmask, rows, cols, radius), bits, bits3, burned)
-    write_table(OUT_DIR / f"{region['id']}.csv.gz", header, out)
+    write_table(out_dir / f"{region['id']}.csv.gz", header, out)
     meta = {
         "region": region["id"],
         "name": region["name"],
@@ -217,7 +218,7 @@ def extract_region(region: dict, samples: dict, today: dt.date, radius: int = RA
         "positives": int(samples["positive"][idx].sum()),
         "columns": COLUMNS,
     }
-    xs.write_json(OUT_DIR / f"{region['id']}.json", meta)
+    xs.write_json(out_dir / f"{region['id']}.json", meta)
     print(f"{region['id']}: wrote {len(out)} rows")
     return meta
 
@@ -229,6 +230,7 @@ def main(argv=None) -> int:
     g.add_argument("--all", action="store_true", help="every enabled region")
     ap.add_argument("--samples", type=Path, default=cal.CACHE_FILE, help="path to the regional CSV")
     ap.add_argument("--today", help="pretend date (YYYY-MM-DD), for testing")
+    ap.add_argument("--out-dir", type=Path, default=OUT_DIR, help=f"output folder (default {OUT_DIR})")
     args = ap.parse_args(argv)
 
     if not args.samples.exists():
@@ -242,7 +244,7 @@ def main(argv=None) -> int:
         print(f"Unknown region {args.region!r}", file=sys.stderr)
         return 2
     for region in regions:
-        extract_region(region, samples, today)
+        extract_region(region, samples, today, out_dir=args.out_dir)
     return 0
 
 
