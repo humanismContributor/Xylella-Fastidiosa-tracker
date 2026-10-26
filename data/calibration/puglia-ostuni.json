@@ -1,0 +1,250 @@
+{
+  "region": "puglia-ostuni",
+  "name": "Ostuni coastal plain (BR), Puglia",
+  "generated": "2026-10-26",
+  "source": {
+    "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
+    "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
+    "license": "CC BY 4.0"
+  },
+  "scanner_params_hash": "9cd62be1ed5c4ed8",
+  "scanner_complete_through": 2026,
+  "match": {
+    "radius_px": 1,
+    "window_m": 30,
+    "species": "Olivo"
+  },
+  "samples_on_grid": 6001,
+  "positives_on_grid": 130,
+  "results": [
+    {
+      "lag": 0,
+      "rule": "cell flagged in any season up to the sampling season + 0",
+      "all_trees": {
+        "trees": 6001,
+        "positive": 130,
+        "flagged_share": 0.1076,
+        "flagged_positive": 15,
+        "flagged_negative": 631,
+        "unflagged_positive": 115,
+        "unflagged_negative": 5240,
+        "sensitivity": 0.1154,
+        "positive_rate_flagged": 0.0232,
+        "positive_rate_flagged_ci95": [
+          0.0141,
+          0.038
+        ],
+        "positive_rate_unflagged": 0.0215,
+        "positive_rate_unflagged_ci95": [
+          0.0179,
+          0.0257
+        ],
+        "relative_risk": 1.08
+      },
+      "symptomatic_trees": {
+        "trees": 516,
+        "positive": 87,
+        "flagged_share": 0.0543,
+        "flagged_positive": 13,
+        "flagged_negative": 15,
+        "unflagged_positive": 74,
+        "unflagged_negative": 414,
+        "sensitivity": 0.1494,
+        "positive_rate_flagged": 0.4643,
+        "positive_rate_flagged_ci95": [
+          0.2953,
+          0.6419
+        ],
+        "positive_rate_unflagged": 0.1516,
+        "positive_rate_unflagged_ci95": [
+          0.1225,
+          0.1862
+        ],
+        "relative_risk": 3.06
+      },
+      "by_season": {
+        "2019": {
+          "trees": 460,
+          "positive": 23,
+          "flagged_share": 0.0022,
+          "flagged_positive": 0,
+          "flagged_negative": 1,
+          "unflagged_positive": 23,
+          "unflagged_negative": 436,
+          "sensitivity": 0.0,
+          "positive_rate_flagged": 0.0,
+          "positive_rate_flagged_ci95": [
+            0.0,
+            0.7935
+          ],
+          "positive_rate_unflagged": 0.0501,
+          "positive_rate_unflagged_ci95": [
+            0.0336,
+            0.0741
+          ],
+          "relative_risk": 0.0
+        },
+        "2020": {
+          "trees": 5107,
+          "positive": 32,
+          "flagged_share": 0.1091,
+          "flagged_positive": 2,
+          "flagged_negative": 555,
+          "unflagged_positive": 30,
+          "unflagged_negative": 4520,
+          "sensitivity": 0.0625,
+          "positive_rate_flagged": 0.0036,
+          "positive_rate_flagged_ci95": [
+            0.001,
+            0.013
+          ],
+          "positive_rate_unflagged": 0.0066,
+          "positive_rate_unflagged_ci95": [
+            0.0046,
+            0.0094
+          ],
+          "relative_risk": 0.54
+        },
+        "2021": {
+          "trees": 434,
+          "positive": 75,
+          "flagged_share": 0.2028,
+          "flagged_positive": 13,
+          "flagged_negative": 75,
+          "unflagged_positive": 62,
+          "unflagged_negative": 284,
+          "sensitivity": 0.1733,
+          "positive_rate_flagged": 0.1477,
+          "positive_rate_flagged_ci95": [
+            0.0884,
+            0.2365
+          ],
+          "positive_rate_unflagged": 0.1792,
+          "positive_rate_unflagged_ci95": [
+            0.1424,
+            0.2231
+          ],
+          "relative_risk": 0.82
+        }
+      }
+    },
+    {
+      "lag": 1,
+      "rule": "cell flagged in any season up to the sampling season + 1",
+      "all_trees": {
+        "trees": 6001,
+        "positive": 130,
+        "flagged_share": 0.1831,
+        "flagged_positive": 31,
+        "flagged_negative": 1068,
+        "unflagged_positive": 99,
+        "unflagged_negative": 4803,
+        "sensitivity": 0.2385,
+        "positive_rate_flagged": 0.0282,
+        "positive_rate_flagged_ci95": [
+          0.0199,
+          0.0398
+        ],
+        "positive_rate_unflagged": 0.0202,
+        "positive_rate_unflagged_ci95": [
+          0.0166,
+          0.0245
+        ],
+        "relative_risk": 1.4
+      },
+      "symptomatic_trees": {
+        "trees": 516,
+        "positive": 87,
+        "flagged_share": 0.1647,
+        "flagged_positive": 20,
+        "flagged_negative": 65,
+        "unflagged_positive": 67,
+        "unflagged_negative": 364,
+        "sensitivity": 0.2299,
+        "positive_rate_flagged": 0.2353,
+        "positive_rate_flagged_ci95": [
+          0.1578,
+          0.3357
+        ],
+        "positive_rate_unflagged": 0.1555,
+        "positive_rate_unflagged_ci95": [
+          0.1243,
+          0.1927
+        ],
+        "relative_risk": 1.51
+      },
+      "by_season": {
+        "2019": {
+          "trees": 460,
+          "positive": 23,
+          "flagged_share": 0.1239,
+          "flagged_positive": 2,
+          "flagged_negative": 55,
+          "unflagged_positive": 21,
+          "unflagged_negative": 382,
+          "sensitivity": 0.087,
+          "positive_rate_flagged": 0.0351,
+          "positive_rate_flagged_ci95": [
+            0.0097,
+            0.1192
+          ],
+          "positive_rate_unflagged": 0.0521,
+          "positive_rate_unflagged_ci95": [
+            0.0343,
+            0.0783
+          ],
+          "relative_risk": 0.67
+        },
+        "2020": {
+          "trees": 5107,
+          "positive": 32,
+          "flagged_share": 0.186,
+          "flagged_positive": 15,
+          "flagged_negative": 935,
+          "unflagged_positive": 17,
+          "unflagged_negative": 4140,
+          "sensitivity": 0.4688,
+          "positive_rate_flagged": 0.0158,
+          "positive_rate_flagged_ci95": [
+            0.0096,
+            0.0259
+          ],
+          "positive_rate_unflagged": 0.0041,
+          "positive_rate_unflagged_ci95": [
+            0.0026,
+            0.0065
+          ],
+          "relative_risk": 3.86
+        },
+        "2021": {
+          "trees": 434,
+          "positive": 75,
+          "flagged_share": 0.212,
+          "flagged_positive": 14,
+          "flagged_negative": 78,
+          "unflagged_positive": 61,
+          "unflagged_negative": 281,
+          "sensitivity": 0.1867,
+          "positive_rate_flagged": 0.1522,
+          "positive_rate_flagged_ci95": [
+            0.0929,
+            0.2394
+          ],
+          "positive_rate_unflagged": 0.1784,
+          "positive_rate_unflagged_ci95": [
+            0.1414,
+            0.2224
+          ],
+          "relative_risk": 0.85
+        }
+      }
+    }
+  ],
+  "caveats": [
+    "Sampling is targeted, not random: inspectors favour symptomatic trees and the buffer and containment zones, and stop sampling once an area is declared infected.",
+    "Cells the scanner never judges (built-up land, non-WorldCover classes) count as not flagged, because state.npz does not store the land mask.",
+    "Outside the infected zone, positive trees must be removed, and in eradication areas also the host plants within 50 m (Reg. (EU) 2020/1201, https://eur-lex.europa.eu/eli/reg_impl/2020/1201/oj). Removal looks like decline to the scanner. A flag in the season after a positive (lag 1) may show the eradication rather than the disease.",
+    "About a third of positives had no symptoms; no canopy-based method can see those.",
+    "Coordinates are those recorded by the inspectors; a tree near a cell edge may be matched to the wrong cell, which the 3 x 3 window only partly absorbs."
+  ]
+}
