@@ -1,0 +1,154 @@
+{
+  "region": "puglia-bisceglie",
+  "name": "Bisceglie (BT), Puglia",
+  "generated": "2026-10-26",
+  "source": {
+    "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
+    "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
+    "license": "CC BY 4.0"
+  },
+  "scanner_params_hash": "84e3c87738b0e9ec",
+  "scanner_complete_through": 2026,
+  "match": {
+    "radius_px": 1,
+    "window_m": 30,
+    "species": "Olivo"
+  },
+  "samples_on_grid": 315,
+  "positives_on_grid": 0,
+  "results": [
+    {
+      "lag": 0,
+      "rule": "cell flagged in any season up to the sampling season + 0",
+      "all_trees": {
+        "trees": 315,
+        "positive": 0,
+        "flagged_share": 0.1079,
+        "flagged_positive": 0,
+        "flagged_negative": 34,
+        "unflagged_positive": 0,
+        "unflagged_negative": 281,
+        "sensitivity": null,
+        "positive_rate_flagged": 0.0,
+        "positive_rate_flagged_ci95": [
+          0.0,
+          0.1015
+        ],
+        "positive_rate_unflagged": 0.0,
+        "positive_rate_unflagged_ci95": [
+          -0.0,
+          0.0135
+        ],
+        "relative_risk": null
+      },
+      "symptomatic_trees": {
+        "trees": 0,
+        "positive": 0,
+        "flagged_share": null,
+        "flagged_positive": 0,
+        "flagged_negative": 0,
+        "unflagged_positive": 0,
+        "unflagged_negative": 0,
+        "sensitivity": null,
+        "positive_rate_flagged": null,
+        "positive_rate_flagged_ci95": null,
+        "positive_rate_unflagged": null,
+        "positive_rate_unflagged_ci95": null,
+        "relative_risk": null
+      },
+      "by_season": {
+        "2021": {
+          "trees": 315,
+          "positive": 0,
+          "flagged_share": 0.1079,
+          "flagged_positive": 0,
+          "flagged_negative": 34,
+          "unflagged_positive": 0,
+          "unflagged_negative": 281,
+          "sensitivity": null,
+          "positive_rate_flagged": 0.0,
+          "positive_rate_flagged_ci95": [
+            0.0,
+            0.1015
+          ],
+          "positive_rate_unflagged": 0.0,
+          "positive_rate_unflagged_ci95": [
+            -0.0,
+            0.0135
+          ],
+          "relative_risk": null
+        }
+      }
+    },
+    {
+      "lag": 1,
+      "rule": "cell flagged in any season up to the sampling season + 1",
+      "all_trees": {
+        "trees": 315,
+        "positive": 0,
+        "flagged_share": 0.1079,
+        "flagged_positive": 0,
+        "flagged_negative": 34,
+        "unflagged_positive": 0,
+        "unflagged_negative": 281,
+        "sensitivity": null,
+        "positive_rate_flagged": 0.0,
+        "positive_rate_flagged_ci95": [
+          0.0,
+          0.1015
+        ],
+        "positive_rate_unflagged": 0.0,
+        "positive_rate_unflagged_ci95": [
+          -0.0,
+          0.0135
+        ],
+        "relative_risk": null
+      },
+      "symptomatic_trees": {
+        "trees": 0,
+        "positive": 0,
+        "flagged_share": null,
+        "flagged_positive": 0,
+        "flagged_negative": 0,
+        "unflagged_positive": 0,
+        "unflagged_negative": 0,
+        "sensitivity": null,
+        "positive_rate_flagged": null,
+        "positive_rate_flagged_ci95": null,
+        "positive_rate_unflagged": null,
+        "positive_rate_unflagged_ci95": null,
+        "relative_risk": null
+      },
+      "by_season": {
+        "2021": {
+          "trees": 315,
+          "positive": 0,
+          "flagged_share": 0.1079,
+          "flagged_positive": 0,
+          "flagged_negative": 34,
+          "unflagged_positive": 0,
+          "unflagged_negative": 281,
+          "sensitivity": null,
+          "positive_rate_flagged": 0.0,
+          "positive_rate_flagged_ci95": [
+            0.0,
+            0.1015
+          ],
+          "positive_rate_unflagged": 0.0,
+          "positive_rate_unflagged_ci95": [
+            -0.0,
+            0.0135
+          ],
+          "relative_risk": null
+        }
+      }
+    }
+  ],
+  "caveats": [
+    "Sampling is targeted, not random: inspectors favour symptomatic trees and the buffer and containment zones, and stop sampling once an area is declared infected.",
+    "Cells the scanner never judges (built-up land, non-WorldCover classes) count as not flagged, because state.npz does not store the land mask.",
+    "Outside the infected zone, positive trees must be removed, and in eradication areas also the host plants within 50 m (Reg. (EU) 2020/1201, https://eur-lex.europa.eu/eli/reg_impl/2020/1201/oj). Removal looks like decline to the scanner. A flag in the season after a positive (lag 1) may show the eradication rather than the disease.",
+    "About a third of positives had no symptoms; no canopy-based method can see those.",
+    "Coordinates are those recorded by the inspectors; a tree near a cell edge may be matched to the wrong cell, which the 3 x 3 window only partly absorbs."
+  ]
+}

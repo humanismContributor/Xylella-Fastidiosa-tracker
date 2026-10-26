@@ -1,0 +1,67 @@
+{
+  "generated": "2026-10-26",
+  "source": {
+    "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
+    "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
+    "license": "CC BY 4.0"
+  },
+  "regions": [
+    {
+      "region": "puglia-ostuni",
+      "samples_on_grid": 6001,
+      "positives_on_grid": 130,
+      "lag0": {
+        "flagged_share": 0.1076,
+        "sensitivity": 0.1154,
+        "positive_rate_flagged": 0.0232,
+        "positive_rate_unflagged": 0.0215,
+        "relative_risk": 1.08
+      },
+      "lag1": {
+        "flagged_share": 0.1831,
+        "sensitivity": 0.2385,
+        "positive_rate_flagged": 0.0282,
+        "positive_rate_unflagged": 0.0202,
+        "relative_risk": 1.4
+      }
+    },
+    {
+      "region": "puglia-monopoli-polignano",
+      "samples_on_grid": 50033,
+      "positives_on_grid": 218,
+      "lag0": {
+        "flagged_share": 0.1847,
+        "sensitivity": 0.3716,
+        "positive_rate_flagged": 0.0088,
+        "positive_rate_unflagged": 0.0034,
+        "relative_risk": 2.61
+      },
+      "lag1": {
+        "flagged_share": 0.2081,
+        "sensitivity": 0.578,
+        "positive_rate_flagged": 0.0121,
+        "positive_rate_unflagged": 0.0023,
+        "relative_risk": 5.21
+      }
+    },
+    {
+      "region": "puglia-bisceglie",
+      "samples_on_grid": 315,
+      "positives_on_grid": 0,
+      "lag0": {
+        "flagged_share": 0.1079,
+        "sensitivity": null,
+        "positive_rate_flagged": 0.0,
+        "positive_rate_unflagged": 0.0,
+        "relative_risk": null
+      },
+      "lag1": {
+        "flagged_share": 0.1079,
+        "sensitivity": null,
+        "positive_rate_flagged": 0.0,
+        "positive_rate_unflagged": 0.0,
+        "relative_risk": null
+      }
+    }
+  ]
+}
