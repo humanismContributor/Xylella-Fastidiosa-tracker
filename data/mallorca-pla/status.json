@@ -1,31 +1,38 @@
 {
   "region": "mallorca-pla",
   "name": "Pla de Mallorca almond orchards, Balearic Islands",
-  "scan_date": "2026-10-22",
-  "last_checked": "2026-10-22",
+  "scan_date": "2026-10-26",
+  "last_checked": "2026-10-26",
   "latest_season": 2026,
   "season_complete": true,
-  "season_window": "07-01 to 08-31",
-  "compared_with": 2025,
+  "season_window": "08-01 to 09-30",
+  "profile": "almond",
+  "profile_label": "Almond",
+  "profile_reliability": "inferred",
+  "profile_notes": "Thresholds inferred from symptom biology (UC IPM almond leaf scorch guidelines) and airborne studies (Camino et al. 2021, Alicante); no Sentinel-2 calibration exists. Late-summer drought defoliation and harvest can look similar.",
+  "compared_with": "median of 2023–2025",
   "result": "ok",
   "totals_ha": {
-    "new": 15.96,
-    "continuing": 3.62,
-    "earlier": 483.07
+    "new": 2.3,
+    "continuing": 0.21,
+    "earlier": 54.49
   },
-  "polygons": 7635,
-  "baseline_share_in_range": 0.912,
+  "polygons": 1158,
+  "baseline_share_in_range": 0.973,
   "masks": {
     "worldcover": "ESA WorldCover 2021",
-    "olive_mask": null,
+    "crop_mask": "mallorca-pla.geojson",
     "worldcover_share_kept": 0.93,
+    "parcels": 883,
+    "built": "2026-10-26",
+    "source": "SIGPAC Illes Balears (Govern de les Illes Balears, IDEIB)",
     "burned_area": "MODIS burned area (MCD64A1): 0 cell-seasons excluded"
   },
   "parameters": {
     "first_season": 2019,
     "season": [
-      "07-01",
-      "08-31"
+      "08-01",
+      "09-30"
     ],
     "scene_cloud_max": 30,
     "min_dates": 3,
@@ -34,10 +41,10 @@
       5
     ],
     "reflectance_offset": 1000,
-    "baseline_osavi_min": 0.12,
+    "baseline_osavi_min": 0.1,
     "baseline_osavi_max": 0.5,
-    "min_rel_drop": 0.3,
-    "min_abs_drop": 0.04,
+    "min_rel_drop": 0.25,
+    "min_abs_drop": 0.03,
     "max_baseline_rise": 0.25,
     "recovery_share": 0.5,
     "keep_worldcover": [
@@ -51,6 +58,8 @@
     "parcel_extent": 0.75,
     "parcel_min_m2": 2000,
     "burned_area_filter": "modis-64A1-061",
-    "burned_window": "from the start of the baseline summer"
+    "burned_window": "from the start of the baseline summer",
+    "baseline_years": 3,
+    "max_baseline_spread": 0.35
   }
 }
