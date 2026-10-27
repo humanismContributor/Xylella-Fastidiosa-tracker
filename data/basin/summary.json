@@ -3,21 +3,21 @@
   "resolution_m": 100,
   "square_km": 5.0,
   "cells_total": 460,
-  "cells_done": 346,
+  "cells_done": 348,
   "cells_skipped": 112,
-  "cells_pending": 2,
+  "cells_pending": 0,
   "seasons_in_data": [
     2026
   ],
   "flagged_ha": {
-    "new": 276104,
-    "continuing": 2539
+    "new": 277115,
+    "continuing": 2548
   },
-  "squares": 12606,
+  "squares": 12758,
   "squares_by_status": {
-    "new": 1978,
+    "new": 1981,
     "continuing": 4,
-    "earlier": 10624
+    "earlier": 10773
   },
   "provisional": true,
   "rules": {
@@ -26,5 +26,5 @@
     "min_square_ha": 10,
     "min_square_share": 0.02
   },
-  "merged": "2026-10-22"
+  "merged": "2026-10-27"
 }
