@@ -1,5 +1,5 @@
 {
- "checked": "2026-10-22",
+ "checked": "2026-10-27",
  "sources": {
   "eu-demarcated": {
    "href": "https://food.ec.europa.eu/document/download/77ec3d12-c080-4273-b604-5cb5164a4c78_en?filename=ph_biosec_legis_list-demarcated-union-territory_en.pdf",
@@ -32,6 +32,16 @@
     "https://www.mapa.gob.es/dam/mapa/contenido/agricultura/temas/sanidad-vegetal/xylella-fastydiosa/franciscojbeitia-papeldelosvectores.pdf",
     "https://www.mapa.gob.es/dam/mapa/contenido/agricultura/temas/sanidad-vegetal/xylella-fastydiosa/instruccionescomercializacionplantasensiblexylellafastidiosa010920.pdf",
     "https://www.mapa.gob.es/dam/mapa/contenido/agricultura/temas/sanidad-vegetal/xylella-fastydiosa/posterxylellabaleares.pdf"
+   ]
+  },
+  "informaci-n-de-inter-s-comunidad-valenci": {
+   "items": [
+    "https://dogv.gva.es/datos/2021/07/28/pdf/2021_8033.pdf"
+   ]
+  },
+  "ltima-situaci-n-baleares": {
+   "items": [
+    "https://www.caib.es/sites/xf/es/situacian_actual_en_las_illes_balears/archivopub.do?ctrl=MCRST8705ZI475992&id=475992"
    ]
   }
  },
