@@ -454,8 +454,11 @@ def region_view(r, recs):
             sorted(STATUS.values(), key=lambda s: -s["order"])]
            + [("border:2px dashed #374151", "Dashed outline: parcel-shaped patch, possibly trees removed")])
 
-    show_earlier = st.checkbox("Show areas flagged in earlier seasons", value=True,
-                               help="Turning this off makes the map faster in areas with many older patches.")
+    # Off by default: older patches are most of the polygons (up to 3 MB of map per view),
+    # too much for phones on a mobile connection
+    show_earlier = st.checkbox("Show areas flagged in earlier seasons", value=False,
+                               help="Draws every older patch too, which makes the map much slower to load, "
+                                    "especially on phones.")
     w, so, e, n = r["bbox"]
     m = folium.Map(location=[(so + n) / 2, (w + e) / 2], zoom_start=13, tiles="OpenStreetMap",
                    prefer_canvas=True)
