@@ -3,7 +3,8 @@ name: Add Official Source
 # Runs when the approved-source label is added to a "Suggest an official source"
 # issue: tests the page, adds it to official_sources.json and closes the issue,
 # or explains in a comment why it couldn't. Only people with at least triage
-# access to the repository can add labels.
+# access to the repository can add labels. Issues without the source-suggestion
+# label (which the form adds) are skipped, so a stray label does nothing.
 
 on:
   issues:
@@ -19,7 +20,7 @@ concurrency:
 
 jobs:
   add:
-    if: ${{ github.event.label.name == 'approved-source' }}
+    if: ${{ github.event.label.name == 'approved-source' && contains(github.event.issue.labels.*.name, 'source-suggestion') }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
