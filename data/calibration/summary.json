@@ -1,85 +1,104 @@
 {
-  "generated": "2026-10-26",
+  "generated": "2026-11-04",
   "source": {
-    "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
-    "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
-    "license": "CC BY 4.0"
+    "title": "Regione Puglia, Sezione Osservatorio Fitosanitario: Download dati Monitoraggio Xylella f. (campaigns 2013-2025)",
+    "url": "http://www.emergenzaxylella.it/portal/portale_gestione_agricoltura/Download/mon_xf",
+    "license": "not stated on the page; reuse permission requested"
   },
   "regions": [
     {
       "region": "puglia-ostuni",
-      "samples_on_grid": 6001,
-      "positives_on_grid": 130,
+      "samples_on_grid": 6397,
+      "positives_on_grid": 155,
       "lag0": {
-        "flagged_share": 0.1076,
-        "sensitivity": 0.1154,
-        "positive_rate_flagged": 0.0232,
-        "positive_rate_unflagged": 0.0215,
-        "relative_risk": 1.08
+        "flagged_share": 0.1016,
+        "sensitivity": 0.0968,
+        "positive_rate_flagged": 0.0231,
+        "positive_rate_unflagged": 0.0244,
+        "relative_risk": 0.95
       },
       "lag1": {
-        "flagged_share": 0.1831,
-        "sensitivity": 0.2385,
-        "positive_rate_flagged": 0.0282,
-        "positive_rate_unflagged": 0.0202,
-        "relative_risk": 1.4
+        "flagged_share": 0.179,
+        "sensitivity": 0.2387,
+        "positive_rate_flagged": 0.0323,
+        "positive_rate_unflagged": 0.0225,
+        "relative_risk": 1.44
       }
     },
     {
       "region": "puglia-monopoli-polignano",
-      "samples_on_grid": 50033,
-      "positives_on_grid": 218,
+      "samples_on_grid": 67714,
+      "positives_on_grid": 343,
       "lag0": {
-        "flagged_share": 0.1847,
-        "sensitivity": 0.3716,
-        "positive_rate_flagged": 0.0088,
-        "positive_rate_unflagged": 0.0034,
-        "relative_risk": 2.61
+        "flagged_share": 0.1932,
+        "sensitivity": 0.3703,
+        "positive_rate_flagged": 0.0097,
+        "positive_rate_unflagged": 0.004,
+        "relative_risk": 2.46
       },
       "lag1": {
-        "flagged_share": 0.2081,
-        "sensitivity": 0.578,
-        "positive_rate_flagged": 0.0121,
-        "positive_rate_unflagged": 0.0023,
-        "relative_risk": 5.21
+        "flagged_share": 0.2216,
+        "sensitivity": 0.5452,
+        "positive_rate_flagged": 0.0125,
+        "positive_rate_unflagged": 0.003,
+        "relative_risk": 4.21
       }
     },
     {
       "region": "puglia-monopoli-fasano",
-      "samples_on_grid": 75355,
-      "positives_on_grid": 179,
+      "samples_on_grid": 83650,
+      "positives_on_grid": 210,
       "lag0": {
-        "flagged_share": 0.1166,
-        "sensitivity": 0.0726,
-        "positive_rate_flagged": 0.0015,
-        "positive_rate_unflagged": 0.0025,
-        "relative_risk": 0.59
+        "flagged_share": 0.1211,
+        "sensitivity": 0.0905,
+        "positive_rate_flagged": 0.0019,
+        "positive_rate_unflagged": 0.0026,
+        "relative_risk": 0.72
       },
       "lag1": {
-        "flagged_share": 0.1606,
-        "sensitivity": 0.0894,
-        "positive_rate_flagged": 0.0013,
+        "flagged_share": 0.166,
+        "sensitivity": 0.1238,
+        "positive_rate_flagged": 0.0019,
         "positive_rate_unflagged": 0.0026,
-        "relative_risk": 0.51
+        "relative_risk": 0.71
       }
     },
     {
       "region": "puglia-bisceglie",
-      "samples_on_grid": 315,
-      "positives_on_grid": 0,
+      "samples_on_grid": 13364,
+      "positives_on_grid": 1,
       "lag0": {
-        "flagged_share": 0.1079,
-        "sensitivity": null,
+        "flagged_share": 0.1416,
+        "sensitivity": 0.0,
         "positive_rate_flagged": 0.0,
-        "positive_rate_unflagged": 0.0,
-        "relative_risk": null
+        "positive_rate_unflagged": 0.0001,
+        "relative_risk": 0.0
       },
       "lag1": {
-        "flagged_share": 0.1079,
-        "sensitivity": null,
+        "flagged_share": 0.149,
+        "sensitivity": 0.0,
         "positive_rate_flagged": 0.0,
-        "positive_rate_unflagged": 0.0,
-        "relative_risk": null
+        "positive_rate_unflagged": 0.0001,
+        "relative_risk": 0.0
+      }
+    },
+    {
+      "region": "puglia-cagnano-varano",
+      "samples_on_grid": 3815,
+      "positives_on_grid": 260,
+      "lag0": {
+        "flagged_share": 0.2163,
+        "sensitivity": 0.1885,
+        "positive_rate_flagged": 0.0594,
+        "positive_rate_unflagged": 0.0706,
+        "relative_risk": 0.84
+      },
+      "lag1": {
+        "flagged_share": 0.3552,
+        "sensitivity": 0.8346,
+        "positive_rate_flagged": 0.1601,
+        "positive_rate_unflagged": 0.0175,
+        "relative_risk": 9.16
       }
     }
   ]

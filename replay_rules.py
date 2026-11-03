@@ -11,13 +11,13 @@ summer before, separate positive from negative trees better than the current one
 A rule is chosen on one part of the data and scored on another, never on the
 same trees:
     temporal   choose on seasons up to 2020, score on 2021 onward (each region)
-    spatial    choose on one region, score on the other
+    spatial    choose on all other regions, score on the one left out
+Regions and periods with fewer than MIN_POSITIVES scorable positives are skipped.
 
 Nothing here changes PARAMS or any scan output. Re-run it whenever the tables
 are refreshed (for example after new sampling campaigns are published):
 
-    python sample_osavi.py --region puglia-monopoli-polignano
-    python sample_osavi.py --region puglia-monopoli-fasano
+    python sample_osavi.py --all
     python replay_rules.py
 
 Output: data/calibration/rule_replay.json
@@ -44,8 +44,8 @@ import sample_osavi as so
 import xylella_scanner as xs
 
 OUT_FILE = cal.OUT_DIR / "rule_replay.json"
-REGIONS = ("puglia-monopoli-polignano", "puglia-monopoli-fasano")
 TRAIN_UNTIL = 2020           # temporal split: choose on seasons <= this, score on later ones
+MIN_POSITIVES = 20           # a region or period with fewer scorable positives is not used
 BOOTSTRAP = 1000
 BLOCK_PX = 10                # bootstrap blocks of 100 m: nearby trees are sampled together
 
@@ -231,17 +231,20 @@ def evaluate(tables: dict, rules: list | None = None, lags=(0, 1)) -> list:
         prep = prepare(tables, rules, lag)
         part = lambda rid, m: (prep[rid]["preds"], tables[rid]["positive"], prep[rid]["usable"] & m,
                                tables[rid]["block"])
+        enough = lambda rid, m: int((tables[rid]["positive"] & prep[rid]["usable"] & m).sum()) >= MIN_POSITIVES
         out = {"lag": lag, "splits": []}
         for rid, t in tables.items():
             early = t["season"] <= TRAIN_UNTIL
-            out["splits"].append(run_split(f"temporal {rid}: <= {TRAIN_UNTIL} -> > {TRAIN_UNTIL}", rules,
-                                           [part(rid, early)], [part(rid, ~early)]))
-        ids = list(tables)
-        if len(ids) == 2:
-            every = lambda rid: np.ones(len(tables[rid]["season"]), bool)
-            for a, b in (ids, ids[::-1]):
-                out["splits"].append(run_split(f"spatial {a} -> {b}", rules,
-                                               [part(a, every(a))], [part(b, every(b))]))
+            if enough(rid, early) and enough(rid, ~early):
+                out["splits"].append(run_split(f"temporal {rid}: <= {TRAIN_UNTIL} -> > {TRAIN_UNTIL}", rules,
+                                               [part(rid, early)], [part(rid, ~early)]))
+        every = lambda rid: np.ones(len(tables[rid]["season"]), bool)
+        ids = [rid for rid in tables if enough(rid, every(rid))]
+        if len(ids) >= 2:
+            for b in ids:                                  # each region held out, chosen on the others
+                others = [a for a in ids if a != b]
+                out["splits"].append(run_split(f"spatial {' + '.join(others)} -> {b}", rules,
+                                               [part(a, every(a)) for a in others], [part(b, every(b))]))
         results.append(out)
     return results
 
@@ -253,12 +256,12 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
 
     tables, meta = {}, {}
-    for rid in REGIONS:
-        path = args.tables_dir / f"{rid}.csv.gz"
-        if not path.exists():
-            print(f"Missing {path}; run sample_osavi.py --region {rid} first.", file=sys.stderr)
-            return 2
+    for path in sorted(args.tables_dir.glob("*.csv.gz")):
+        rid = path.name[:-len(".csv.gz")]
         tables[rid] = load_table(path)
+    if not tables:
+        print(f"No OSAVI tables in {args.tables_dir}; run sample_osavi.py --all first.", file=sys.stderr)
+        return 2
         m = json.loads((args.tables_dir / f"{rid}.json").read_text())
         meta[rid] = {"table_generated": m.get("generated"), "samples": m.get("samples"),
                      "positives": m.get("positives"), "years": m.get("years")}

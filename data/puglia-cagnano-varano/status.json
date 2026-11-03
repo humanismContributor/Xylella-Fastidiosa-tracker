@@ -1,24 +1,28 @@
 {
   "region": "puglia-cagnano-varano",
   "name": "Cagnano Varano, Gargano (FG), Puglia",
-  "scan_date": "2026-10-22",
-  "last_checked": "2026-11-02",
+  "scan_date": "2026-11-04",
+  "last_checked": "2026-11-04",
   "latest_season": 2026,
   "season_complete": true,
   "season_window": "07-01 to 08-31",
+  "profile": "olive",
+  "profile_label": "Olive",
+  "profile_reliability": "literature-based",
+  "profile_notes": "Evergreen, steady summer greenness; olive quick decline is progressive and trees don't recover. Drop thresholds from Scala et al. 2024 and Hornero et al. 2020.",
   "compared_with": 2025,
   "result": "ok",
   "totals_ha": {
-    "new": 153.8,
-    "continuing": 2.4,
-    "earlier": 190.38
+    "new": 80.65,
+    "continuing": 6.41,
+    "earlier": 191.08
   },
-  "polygons": 3262,
-  "baseline_share_in_range": 0.726,
+  "polygons": 2525,
+  "baseline_share_in_range": 0.603,
   "masks": {
     "worldcover": "ESA WorldCover 2021",
-    "olive_mask": null,
-    "worldcover_share_kept": 0.797,
+    "crop_mask": null,
+    "worldcover_share_kept": 0.541,
     "burned_area": "MODIS burned area (MCD64A1): 0 cell-seasons excluded"
   },
   "parameters": {
@@ -51,6 +55,8 @@
     "parcel_extent": 0.75,
     "parcel_min_m2": 2000,
     "burned_area_filter": "modis-64A1-061",
-    "burned_window": "from the start of the baseline summer"
+    "burned_window": "from the start of the baseline summer",
+    "baseline_years": 1,
+    "max_baseline_spread": null
   }
 }

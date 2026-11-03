@@ -1,0 +1,166 @@
+{
+  "region": "puglia-cagnano-varano",
+  "name": "Cagnano Varano, Gargano (FG), Puglia",
+  "generated": "2026-11-04",
+  "source": {
+    "title": "Regione Puglia, Sezione Osservatorio Fitosanitario: Download dati Monitoraggio Xylella f. (campaigns 2013-2025)",
+    "url": "http://www.emergenzaxylella.it/portal/portale_gestione_agricoltura/Download/mon_xf",
+    "license": "not stated on the page; reuse permission requested"
+  },
+  "scanner_params_hash": "29b0cdf516c24f76",
+  "scanner_complete_through": 2026,
+  "match": {
+    "radius_px": 1,
+    "window_m": 30,
+    "species": "Olivo"
+  },
+  "samples_on_grid": 3815,
+  "positives_on_grid": 260,
+  "results": [
+    {
+      "lag": 0,
+      "rule": "cell flagged in any season up to the sampling season + 0",
+      "all_trees": {
+        "trees": 3815,
+        "positive": 260,
+        "flagged_share": 0.2163,
+        "flagged_positive": 49,
+        "flagged_negative": 776,
+        "unflagged_positive": 211,
+        "unflagged_negative": 2779,
+        "sensitivity": 0.1885,
+        "positive_rate_flagged": 0.0594,
+        "positive_rate_flagged_ci95": [
+          0.0452,
+          0.0777
+        ],
+        "positive_rate_unflagged": 0.0706,
+        "positive_rate_unflagged_ci95": [
+          0.0619,
+          0.0803
+        ],
+        "relative_risk": 0.84
+      },
+      "symptomatic_trees": {
+        "trees": 453,
+        "positive": 196,
+        "flagged_share": 0.2384,
+        "flagged_positive": 39,
+        "flagged_negative": 69,
+        "unflagged_positive": 157,
+        "unflagged_negative": 188,
+        "sensitivity": 0.199,
+        "positive_rate_flagged": 0.3611,
+        "positive_rate_flagged_ci95": [
+          0.2767,
+          0.455
+        ],
+        "positive_rate_unflagged": 0.4551,
+        "positive_rate_unflagged_ci95": [
+          0.4033,
+          0.5078
+        ],
+        "relative_risk": 0.79
+      },
+      "by_season": {
+        "2025": {
+          "trees": 3815,
+          "positive": 260,
+          "flagged_share": 0.2163,
+          "flagged_positive": 49,
+          "flagged_negative": 776,
+          "unflagged_positive": 211,
+          "unflagged_negative": 2779,
+          "sensitivity": 0.1885,
+          "positive_rate_flagged": 0.0594,
+          "positive_rate_flagged_ci95": [
+            0.0452,
+            0.0777
+          ],
+          "positive_rate_unflagged": 0.0706,
+          "positive_rate_unflagged_ci95": [
+            0.0619,
+            0.0803
+          ],
+          "relative_risk": 0.84
+        }
+      }
+    },
+    {
+      "lag": 1,
+      "rule": "cell flagged in any season up to the sampling season + 1",
+      "all_trees": {
+        "trees": 3815,
+        "positive": 260,
+        "flagged_share": 0.3552,
+        "flagged_positive": 217,
+        "flagged_negative": 1138,
+        "unflagged_positive": 43,
+        "unflagged_negative": 2417,
+        "sensitivity": 0.8346,
+        "positive_rate_flagged": 0.1601,
+        "positive_rate_flagged_ci95": [
+          0.1416,
+          0.1806
+        ],
+        "positive_rate_unflagged": 0.0175,
+        "positive_rate_unflagged_ci95": [
+          0.013,
+          0.0235
+        ],
+        "relative_risk": 9.16
+      },
+      "symptomatic_trees": {
+        "trees": 453,
+        "positive": 196,
+        "flagged_share": 0.6424,
+        "flagged_positive": 168,
+        "flagged_negative": 123,
+        "unflagged_positive": 28,
+        "unflagged_negative": 134,
+        "sensitivity": 0.8571,
+        "positive_rate_flagged": 0.5773,
+        "positive_rate_flagged_ci95": [
+          0.5199,
+          0.6327
+        ],
+        "positive_rate_unflagged": 0.1728,
+        "positive_rate_unflagged_ci95": [
+          0.1224,
+          0.2385
+        ],
+        "relative_risk": 3.34
+      },
+      "by_season": {
+        "2025": {
+          "trees": 3815,
+          "positive": 260,
+          "flagged_share": 0.3552,
+          "flagged_positive": 217,
+          "flagged_negative": 1138,
+          "unflagged_positive": 43,
+          "unflagged_negative": 2417,
+          "sensitivity": 0.8346,
+          "positive_rate_flagged": 0.1601,
+          "positive_rate_flagged_ci95": [
+            0.1416,
+            0.1806
+          ],
+          "positive_rate_unflagged": 0.0175,
+          "positive_rate_unflagged_ci95": [
+            0.013,
+            0.0235
+          ],
+          "relative_risk": 9.16
+        }
+      }
+    }
+  ],
+  "caveats": [
+    "Sampling is targeted, not random: inspectors favour symptomatic trees and the buffer and containment zones, and stop sampling once an area is declared infected.",
+    "Cells the scanner never judges (built-up land, non-WorldCover classes) count as not flagged, because state.npz does not store the land mask.",
+    "Outside the infected zone, positive trees must be removed, and in eradication areas also the host plants within 50 m (Reg. (EU) 2020/1201, https://eur-lex.europa.eu/eli/reg_impl/2020/1201/oj). Removal looks like decline to the scanner. A flag in the season after a positive (lag 1) may show the eradication rather than the disease.",
+    "About a third of positives had no symptoms; no canopy-based method can see those.",
+    "Coordinates are those recorded by the inspectors; a tree near a cell edge may be matched to the wrong cell, which the 3 x 3 window only partly absorbs."
+  ]
+}

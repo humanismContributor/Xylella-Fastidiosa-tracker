@@ -59,12 +59,13 @@
       "id": "puglia-cagnano-varano",
       "name": "Cagnano Varano, Gargano (FG), Puglia",
       "country": "Italy",
-      "bbox": [15.71, 41.80, 15.83, 41.86],
+      "bbox": [15.62, 41.86, 15.74, 41.92],
       "crop": "olive",
       "role": "outbreak",
-      "official_status": "Demarcated area for subsp. pauca established in October 2025 after 47 infected olive trees were confirmed: the first outbreak in the province of Foggia.",
+      "official_status": "Demarcated area for subsp. pauca established in October 2025 after 47 infected olive trees were confirmed: the first outbreak in the province of Foggia. The Region's 2025 campaign sampled 3,961 plants around the outbreak from September to December 2025; 260 olive trees tested positive (subsp. pauca), all within about 1 km of each other. The area was moved here in November 2026 to centre on those samples; the earlier box lay 6-8 km to the south-east.",
       "sources": [
-        {"title": "Gambero Rosso, 9 Oct 2025", "url": "https://www.gamberorosso.it/notizie/attualita/xylella-gargano/"}
+        {"title": "Gambero Rosso, 9 Oct 2025", "url": "https://www.gamberorosso.it/notizie/attualita/xylella-gargano/"},
+        {"title": "Regione Puglia, Osservatorio Fitosanitario: monitoring campaign 2025 (CAMP_2025.xlsx)", "url": "http://www.emergenzaxylella.it/portal/portale_gestione_agricoltura/Download/mon_xf"}
       ],
       "enabled": true
     },

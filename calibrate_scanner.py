@@ -13,15 +13,17 @@ no satellite libraries. It measures the current rules; tuning them needs the
 OSAVI values at each tree, which state.npz does not keep.
 
 Usage
-    python calibrate_scanner.py --download            # fetch the CSV into .cache/
+    python calibrate_scanner.py --download            # fetch the campaign workbooks (2013-2025) into .cache/
     python calibrate_scanner.py                       # every region with samples
     python calibrate_scanner.py --region puglia-monopoli-polignano
+    python calibrate_scanner.py --portal --download   # the older dati.puglia.it export (2020-2023) instead
 
 Outputs, in data/calibration/
     <region-id>.json   counts and rates per lag, all trees and symptomatic only
     summary.json       one line per region
 
-Source: Regione Puglia, "Dati monitoraggio Xylella fastidiosa" (CC BY 4.0),
+Sources: Regione Puglia, Osservatorio Fitosanitario, campaign workbooks 2013-2025
+(puglia_campaigns.py), and "Dati monitoraggio Xylella fastidiosa" (CC BY 4.0),
 https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa
 """
 from __future__ import annotations
@@ -36,13 +38,16 @@ from pathlib import Path
 
 import numpy as np
 
+import puglia_campaigns
 import xylella_scanner as xs
 
 ROOT = Path(__file__).resolve().parent
 OUT_DIR = xs.DATA_DIR / "calibration"
-CACHE_FILE = ROOT / ".cache" / "puglia_samples.csv"
+CACHE_FILE = puglia_campaigns.OUT_FILE          # all campaigns, built by puglia_campaigns.py
+PORTAL_FILE = ROOT / ".cache" / "puglia_samples.csv"
 
-SOURCE = {
+SOURCE = puglia_campaigns.SOURCE
+PORTAL_SOURCE = {
     "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
     "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
     "license": "CC BY 4.0",
@@ -123,11 +128,17 @@ def sample_season(date: dt.date) -> int:
 
 
 def load_samples(path: Path = CACHE_FILE) -> dict:
-    with open(path, encoding="latin-1", newline="") as f:
-        return read_samples(f)
+    """The combined campaign file is UTF-8; the dati.puglia.it export is Latin-1."""
+    try:
+        with open(path, encoding="utf-8", newline="") as f:
+            return read_samples(f)
+    except UnicodeDecodeError:
+        with open(path, encoding="latin-1", newline="") as f:
+            return read_samples(f)
 
 
-def download(path: Path = CACHE_FILE) -> Path:
+def download(path: Path = PORTAL_FILE) -> Path:
+    """The dati.puglia.it export (2020-2023 only); see puglia_campaigns for all campaigns."""
     path.parent.mkdir(parents=True, exist_ok=True)
     print(f"Downloading {SAMPLES_URL} ...", flush=True)
     urllib.request.urlretrieve(SAMPLES_URL, path)
@@ -228,7 +239,8 @@ def score(flag, positive) -> dict:
     }
 
 
-def evaluate_region(region: dict, state: dict, samples: dict, radius: int = RADIUS_PX, lags=LAGS) -> dict | None:
+def evaluate_region(region: dict, state: dict, samples: dict, radius: int = RADIUS_PX, lags=LAGS,
+                    source: dict | None = None) -> dict | None:
     """Scores for one region, or None when no sampled tree falls on its grid."""
     rows, cols = grid_cells(samples["lat"], samples["lon"], state["crs"], state["transform"])
     bits, inside = window_bits(state["flagged"], state["recovered"], rows, cols, radius)
@@ -255,7 +267,7 @@ def evaluate_region(region: dict, state: dict, samples: dict, radius: int = RADI
         "region": region["id"],
         "name": region["name"],
         "generated": dt.date.today().isoformat(),
-        "source": SOURCE,
+        "source": source or SOURCE,
         "scanner_params_hash": state.get("params_hash"),
         "scanner_complete_through": state["complete_through"],
         "match": {"radius_px": radius, "window_m": (2 * radius + 1) * xs.PIXEL_M, "species": SPECIES_PREFIX},
@@ -269,27 +281,36 @@ def evaluate_region(region: dict, state: dict, samples: dict, radius: int = RADI
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--region", help="region id from regions.json (default: all with samples)")
-    ap.add_argument("--samples", type=Path, default=CACHE_FILE, help="path to the regional CSV")
-    ap.add_argument("--download", action="store_true", help="download the CSV first")
+    ap.add_argument("--samples", type=Path, help="path to the regional CSV (default: the combined campaigns)")
+    ap.add_argument("--download", action="store_true", help="download the data first")
+    ap.add_argument("--portal", action="store_true", help="use the dati.puglia.it export (2020-2023) instead")
     ap.add_argument("--radius", type=int, default=RADIUS_PX, help="match window radius in cells (0 = own cell)")
     args = ap.parse_args(argv)
 
-    if args.download:
-        download(args.samples)
-    if not args.samples.exists():
-        print(f"No sample file at {args.samples}; run with --download first.", file=sys.stderr)
+    path = args.samples or (PORTAL_FILE if args.portal else CACHE_FILE)
+    source = PORTAL_SOURCE if args.portal else SOURCE
+    if args.download and args.portal:
+        download(path)
+    elif args.download:
+        puglia_campaigns.build(path)
+    if not path.exists():
+        print(f"No sample file at {path}; run with --download first.", file=sys.stderr)
         return 2
-    samples = load_samples(args.samples)
+    samples = load_samples(path)
     print(f"{len(samples['lat'])} {SPECIES_PREFIX} samples read ({samples['skipped']} rows skipped)")
 
     regions = [r for r in xs.load_regions() if not args.region or r["id"] == args.region]
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     summary = []
+    if args.region and (OUT_DIR / "summary.json").exists():     # keep the other regions' lines
+        import json
+        summary = [s for s in json.loads((OUT_DIR / "summary.json").read_text())["regions"]
+                   if s["region"] != args.region]
     for region in regions:
         state = xs.load_state(xs.DATA_DIR / region["id"] / "state.npz")
         if state is None:
             continue
-        res = evaluate_region(region, state, samples, radius=args.radius)
+        res = evaluate_region(region, state, samples, radius=args.radius, source=source)
         if res is None:
             print(f"{region['id']}: no sampled trees on the grid")
             continue
@@ -307,7 +328,7 @@ def main(argv=None) -> int:
                            for r in res["results"]}})
     if summary:
         xs.write_json(OUT_DIR / "summary.json", {"generated": dt.date.today().isoformat(),
-                                                 "source": SOURCE, "regions": summary})
+                                                 "source": source, "regions": summary})
     return 0
 
 
