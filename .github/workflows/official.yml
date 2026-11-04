@@ -3,7 +3,9 @@ name: Weekly Official Sources Check
 # Watches official sources besides EPPO, listed in official_sources.json (at
 # first: the EU list of demarcated areas, the EFSA host plant database, Spain's
 # MAPA and Puglia's Emergenza Xylella portal). Opens a GitHub issue for each
-# source that changed. A source's first run only records what already exists.
+# source that changed, then auto_outbreaks.py reads the new documents and adds
+# positive findings to the map as not yet reviewed. A source's first run only
+# records what already exists.
 
 on:
   schedule:
@@ -31,6 +33,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python official_check.py
+      - name: Add new outbreaks to the map
+        # Reads the documents queued by the check and adds positive findings, marked as not yet
+        # reviewed. Needs the repository secret ANTHROPIC_API_KEY; without it the queue is kept.
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          pip install anthropic==2.4.0
+          python auto_outbreaks.py
       - name: Save what has been seen
         # Also after a failed source, so the sources that worked keep their state
         if: ${{ !cancelled() }}
@@ -38,7 +50,7 @@ jobs:
           set -e
           git config user.name "Automated Satellite Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add official_seen.json
+          git add official_seen.json auto_leads.json official_outbreaks.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else

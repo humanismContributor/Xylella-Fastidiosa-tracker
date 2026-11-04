@@ -12,8 +12,9 @@ three ways:
     default, PDFs); links not seen before count as updates,
   * "zenodo": a Zenodo record; a new version counts as an update.
 What has been seen is kept in official_seen.json. Each source with updates
-gets one GitHub issue so a person can check it and update official_outbreaks.json,
-country_status.json or the host list. A source seen for the first time is only
+gets one GitHub issue, and its new documents are queued in auto_leads.json for
+auto_outbreaks.py, which adds positive findings to the map as not yet reviewed.
+Country status and the host list are still updated by hand. A source seen for the first time is only
 recorded. A source that can't be read is skipped for this run and makes the
 check fail at the end (GitHub emails the repository owner); the others still
 report.
@@ -158,6 +159,14 @@ def source_issue(src: dict, updates: list[str]) -> tuple[str, str, list[str]]:
     return f"Official update: {src['name']}"[:240], body, ["official-update"]
 
 
+def queue_updates(src: dict, updates: list[str]) -> None:
+    """Queues each updated document for auto_outbreaks.py; every update line ends with its URL."""
+    from auto_outbreaks import queue_leads
+    queue_leads([{"url": re.findall(r"https?://\S+", u)[-1], "title": u.splitlines()[0].replace("**", "").strip(),
+                  "source": src["name"], "verify_tls": src.get("verify_tls", True)}
+                 for u in updates if re.search(r"https?://\S+", u)])
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
@@ -185,6 +194,8 @@ def main(argv=None) -> int:
             print(f"UPDATE: {t}\n" + "\n".join(f"  {u.splitlines()[0]}" for u in updates))
             if not a.dry_run:
                 open_issue(t, b, labels)
+                if src["kind"] != "zenodo":         # the host database lists plants, not outbreaks
+                    queue_updates(src, updates)
         else:
             print(f"No change: {src['id']}")
 

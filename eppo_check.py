@@ -6,10 +6,10 @@ It reads two public EPPO pages:
   * the Reporting Service list for X. fastidiosa (new articles), and
   * the distribution table (country status: present / absent / transient ...).
 Anything new is compared with eppo_seen.json and, when running in GitHub
-Actions, posted as a GitHub issue so a person can check it and add it to
-official_outbreaks.json or country_status.json. Nothing is added to the map
-automatically: reports often name only a region, and absence or eradication
-notices must not end up drawn as outbreaks.
+Actions, posted as a GitHub issue. New articles are also queued in
+auto_leads.json for auto_outbreaks.py, which adds the positive findings to
+official_outbreaks.json, marked as not yet reviewed. Country-status changes are
+still updated in country_status.json by hand.
 
 Standard library only. Usage:
     python eppo_check.py            # check and open issues (needs GITHUB_TOKEN, GITHUB_REPOSITORY)
@@ -131,8 +131,8 @@ def article_issue(a: dict) -> tuple[str, str, list[str]]:
                "It doesn't name a Mediterranean country in the title; check it anyway, "
                "since general articles ('New data on quarantine pests', 'New EU regulations') can include findings.\n\n")
             + "**To do**\n- [ ] Read the article\n"
-              "- [ ] New outbreak? Add a row to `official_outbreaks.json` (place, coordinates of the municipality, "
-              "year, subspecies, host, source link; `front: true` if it extends the known range)\n"
+              "- [ ] New outbreak? It is added to the map automatically (look for an 'Added to the map' issue); "
+              "if it was missed, add a row to `official_outbreaks.json` by hand\n"
               "- [ ] Status change for a country? Update `country_status.json`\n"
               "- [ ] Close this issue\n")
     return title, body, ["eppo-report"] + (["mediterranean"] if med else [])
@@ -196,6 +196,10 @@ def main(argv=None) -> int:
         print("Nothing new on EPPO.")
 
     if not a.dry_run:
+        if new_articles:
+            from auto_outbreaks import queue_leads
+            queue_leads([{"url": x["url"], "title": x["title"], "verify_tls": True,
+                          "source": f"EPPO Reporting Service {x['num']}".strip()} for x in new_articles])
         SEEN_FILE.write_text(json.dumps({
             "checked": dt.date.today().isoformat(),
             "articles": sorted({x["id"] for x in articles} | set((seen or {}).get("articles", [])), key=int),
