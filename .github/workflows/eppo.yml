@@ -1,9 +1,9 @@
 name: Weekly EPPO Check
 
 # Looks for new Xylella fastidiosa articles and country-status changes on the
-# EPPO Global Database and opens a GitHub issue for each, so they can be
-# reviewed and added to official_outbreaks.json / country_status.json.
-# The first run only records what already exists.
+# EPPO Global Database and opens a GitHub issue for each. New articles are then
+# read by auto_outbreaks.py, which adds positive findings to the map as not yet
+# reviewed. The first run only records what already exists.
 
 on:
   schedule:
@@ -31,12 +31,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python eppo_check.py
+      - name: Add new outbreaks to the map
+        # Reads the documents queued by the check and adds positive findings, marked as not yet
+        # reviewed. Needs the repository secret ANTHROPIC_API_KEY; without it the queue is kept.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          pip install anthropic==2.4.0
+          python auto_outbreaks.py
       - name: Save what has been seen
         run: |
           set -e
           git config user.name "Automated Satellite Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add eppo_seen.json
+          git add eppo_seen.json auto_leads.json official_outbreaks.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else

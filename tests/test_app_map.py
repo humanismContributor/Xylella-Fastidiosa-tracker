@@ -14,3 +14,9 @@ def test_canvas_map_uses_no_svg_only_shapes():
     assert "prefer_canvas=True" in APP, "the overview map is expected to render on canvas"
     used = [name for name in SVG_ONLY if re.search(rf"\b{name}\(", APP)]
     assert not used, f"{used} cannot draw on a canvas map; use CircleMarker or a DivIcon marker"
+
+
+def test_unreviewed_records_are_marked_and_get_no_spread_rings():
+    projection = APP[APP.index("def add_projection"):APP.index("def add_countries")]
+    assert "unreviewed(r)" in projection, "rings around an unchecked automatic record would overstate it"
+    assert "UNREVIEWED_NOTE" in APP[APP.index("def record_popup"):APP.index("def add_records")]
