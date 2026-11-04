@@ -16,7 +16,7 @@ Usage (needs the conda packages from main.yml)
     python sample_osavi.py --region puglia-monopoli-polignano
     python sample_osavi.py --all
 
-Outputs, in data/calibration/osavi/
+Outputs, in .cache/osavi/ (not committed: tree positions and lab results)
     <region-id>.csv.gz   one row per sample (columns described in <region-id>.json)
     <region-id>.json     source, grid, rules, seasons and scene counts
 """
@@ -36,7 +36,9 @@ import numpy as np
 import calibrate_scanner as cal
 import xylella_scanner as xs
 
-OUT_DIR = cal.OUT_DIR / "osavi"
+# Kept out of git: each row holds a sampled tree's exact position and lab result,
+# and the campaign workbooks state no licence. Only aggregate results are committed.
+OUT_DIR = cal.ROOT / ".cache" / "osavi"
 FIRST_YEAR = 2017            # the scanner's earliest baseline summer
 RADIUS_PX = 1
 

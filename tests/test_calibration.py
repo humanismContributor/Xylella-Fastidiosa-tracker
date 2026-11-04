@@ -117,7 +117,9 @@ def test_evaluate_region_end_to_end(grid):
     lag0, lag1 = res["results"]
     assert lag0["all_trees"]["trees"] == 3 and lag0["all_trees"]["flagged_positive"] == 0
     assert lag1["all_trees"]["trees"] == 2 and lag1["all_trees"]["flagged_positive"] == 1
-    assert res["source"]["url"].startswith("https://dati.puglia.it/")
+    assert res["source"]["url"].startswith("http://www.emergenzaxylella.it/")        # campaigns by default
+    portal = cal.evaluate_region({"id": "t", "name": "test"}, grid, samples, source=cal.PORTAL_SOURCE)
+    assert portal["source"]["url"].startswith("https://dati.puglia.it/")
 
 
 def test_evaluate_region_without_samples_on_grid(grid):

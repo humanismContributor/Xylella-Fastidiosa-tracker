@@ -1,8 +1,10 @@
 name: Sample OSAVI at Field Samples
 
-# Manual only. Saves the summer OSAVI at every tree in Regione Puglia's open
-# sampling data that falls inside a scan region (sample_osavi.py), for offline
-# calibration of the decline rules. Reads the scanner's state, never changes it.
+# Manual only. Saves the summer OSAVI at every tree in Regione Puglia's
+# sampling data (campaigns 2013-2025) that falls inside a scan region
+# (sample_osavi.py), for offline calibration of the decline rules. Reads the
+# scanner's state, never changes it, and commits nothing: the tables are kept
+# as a workflow artifact.
 
 on:
   workflow_dispatch:
@@ -10,12 +12,12 @@ on:
       region:
         description: "Region id from regions.json, or 'all'"
         required: true
-        default: "puglia-monopoli-polignano"
+        default: "all"
 
 permissions:
-  contents: write
+  contents: read
 
-# Shares the weekly scan's group, so the two never push at the same time
+# Shares the weekly scan's group, so it never competes with the scan for imagery requests
 concurrency:
   group: xylella-scan
   cancel-in-progress: false
@@ -41,9 +43,9 @@ jobs:
 
       - name: Install Geospatial Python Packages
         run: |
-          mamba install -y numpy scipy xarray dask rasterio pystac-client odc-stac odc-geo planetary-computer
+          mamba install -y numpy scipy xarray dask rasterio pystac-client odc-stac odc-geo planetary-computer openpyxl
 
-      - name: Download the regional sampling data
+      - name: Download the regional sampling data (campaign workbooks 2013-2025)
         run: python calibrate_scanner.py --download
 
       - name: Extract OSAVI at sampled trees
@@ -54,16 +56,11 @@ jobs:
             python sample_osavi.py --region "${{ inputs.region }}"
           fi
 
-      - name: Commit the tables
-        run: |
-          set -e
-          git config user.name "Automated Satellite Bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/calibration/osavi
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "Automated Sync: OSAVI at field samples (${{ inputs.region }})"
-            git pull --rebase origin "${GITHUB_REF_NAME}"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
+      # Not committed: each row is a sampled tree's exact position and lab result, and
+      # the campaign workbooks state no licence. Download the artifact to run replay_rules.py.
+      - name: Keep the tables as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: osavi-tables-${{ inputs.region }}
+          path: .cache/osavi/
+          retention-days: 90
