@@ -1,5 +1,5 @@
 {
- "checked": "2026-10-29",
+ "checked": "2026-11-05",
  "query": "xylella fastidiosa",
  "source": "OpenAlex (https://openalex.org), CC0",
  "seen_ids": [
@@ -300,9 +300,71 @@
   "W7223029615",
   "W7223062704",
   "W7223171153",
-  "W7223242654"
+  "W7223242654",
+  "W7224093414",
+  "W7224617499",
+  "W7225031381",
+  "W7225157965"
  ],
  "recent": [
+  {
+   "id": "W7225157965",
+   "title": "Estrategias de saneamiento para la conservación de variedades locales de almendro infectadas por Xylella fastidiosa",
+   "date": "2026-11-03",
+   "type": "article",
+   "source": "",
+   "authors": "Llorenç Tortella Alomar et al.",
+   "url": "https://doi.org/10.13140/rg.2.2.34777.48484",
+   "open_access_url": "",
+   "topics": [],
+   "places": []
+  },
+  {
+   "id": "W7224617499",
+   "title": "Inovação biotecnológica baseada na biodiversidade no desenvolvimento científico e tecnológico",
+   "date": "2026-10-29",
+   "type": "book-chapter",
+   "source": "",
+   "authors": "Pamella Fukuda de Castilho et al.",
+   "url": "https://doi.org/10.22533/at.ed.2651726291015",
+   "open_access_url": "https://cdn.atenaeditora.com.br/atenaeditora/artigos_anexos/202610/po3lxOb4gVz4rW4FWEQfFtOWvBA9N9auR14bjA4Z.pdf",
+   "topics": [],
+   "places": []
+  },
+  {
+   "id": "W4413340302",
+   "title": "Transcriptome Profiling Reveals Differential Expression of Virulence Genes in Xylella fastidiosa Cultured Under Different Nutrient Conditions",
+   "date": "2026-10-28",
+   "type": "article",
+   "source": "Pathogens",
+   "authors": "Paulo Marques Pierry et al.",
+   "url": "https://doi.org/10.3390/pathogens15111129",
+   "open_access_url": "https://doi.org/10.3390/pathogens15111129",
+   "topics": [
+    "Hosts, vectors and control"
+   ],
+   "places": []
+  },
+  {
+   "id": "W7225031381",
+   "title": "Monitoring the Spread of Xylella fastidiosa subsp. multiplex Infections on Monte Argentario (Italy) through an Integrated Surveillance of the Bacterium and Its Vectors in Natural Ecosystems",
+   "date": "2026-10-14",
+   "type": "dissertation",
+   "source": "Electronic Theses and Dissertations Repository (University of Pisa)",
+   "authors": "Clara Merlini",
+   "url": "https://openalex.org/W7225031381",
+   "open_access_url": "",
+   "topics": [
+    "Spread, outbreaks and surveillance",
+    "Detection and remote sensing",
+    "Hosts, vectors and control"
+   ],
+   "places": [
+    "Italy",
+    "Mediterranean",
+    "Tuscany"
+   ]
+  },
   {
    "id": "W7221509254",
    "title": "Aggregation and toxicity in bacteria of Rep-WH1 prion-like proteins from the phytopathogen Xylella fastidiosa",
@@ -405,8 +467,13 @@
    "authors": "Davis W. Cheng",
    "url": "https://doi.org/10.21203/rs.3.rs-10911583/v1",
    "open_access_url": "https://www.researchsquare.com/article/rs-10911583/latest.pdf",
-   "topics": [],
-   "places": []
+   "topics": [
+    "Detection and remote sensing",
+    "Hosts, vectors and control"
+   ],
+   "places": [
+    "Greece"
+   ]
   },
   {
    "id": "W7221280252",
@@ -578,7 +645,9 @@
    "authors": "Isis Gabriela Barbosa Carvalho et al.",
    "url": "https://doi.org/10.21203/rs.3.rs-10592063/v1",
    "open_access_url": "https://www.researchsquare.com/article/rs-10592063/latest.pdf",
-   "topics": [],
+   "topics": [
+    "Hosts, vectors and control"
+   ],
    "places": []
   },
   {
@@ -606,7 +675,9 @@
    "authors": "DAVIS CHENG",
    "url": "https://doi.org/10.21203/rs.3.rs-10808775/v1",
    "open_access_url": "https://www.researchsquare.com/article/rs-10808775/latest.pdf",
-   "topics": [],
+   "topics": [
+    "Hosts, vectors and control"
+   ],
    "places": []
   },
   {
@@ -740,7 +811,7 @@
    "source": "Agriculture Communications",
    "authors": "Zeinab Hamouche et al.",
    "url": "https://doi.org/10.1016/j.agrcom.2026.100157",
-   "open_access_url": "https://doi.org/10.1016/j.agrcom.2026.100157",
+   "open_access_url": "https://www.sciencedirect.com/science/article/pii/S2949798126000372/pdf",
    "topics": [
     "Spread, outbreaks and surveillance",
     "Hosts, vectors and control"
@@ -835,6 +906,22 @@
    "places": [
     "Israel"
    ]
+  },
+  {
+   "id": "W7224093414",
+   "title": "Dinâmica da colonização e multiplicação de Xylella fastidiosa subsp. pauca influenciada pela temperatura",
+   "date": "2026-07-21",
+   "type": "dissertation",
+   "source": "",
+   "authors": "Maria Oliveira",
+   "url": "https://doi.org/10.11606/d.11.2026.tde-14102026-161145",
+   "open_access_url": "",
+   "topics": [
+    "Spread, outbreaks and surveillance",
+    "Detection and remote sensing",
+    "Hosts, vectors and control"
+   ],
+   "places": []
   },
   {
    "id": "W7169768193",
@@ -1455,7 +1542,7 @@
    "title": "Pathobiome: Driven Innovations in Sustainable Olive Disease Management",
    "date": "2026-05-05",
    "type": "article",
-   "source": "Zenodo (CERN European Organization for Nuclear Research)",
+   "source": "International Journal of Agriculture Innovations and Cutting-Edge Research (HEC Recognised)",
    "authors": "Misbah-Ud-Din Ahmed et al.",
    "url": "https://doi.org/10.5281/zenodo.20040232",
    "open_access_url": "https://doi.org/10.5281/zenodo.20040232",
@@ -1636,7 +1723,7 @@
    "source": "",
    "authors": "Camille Portes",
    "url": "https://doi.org/10.70675/04574aabz3646z425dzae3eza0632c67ba8b",
-   "open_access_url": "https://theses.hal.science/tel-05687125v1/document",
+   "open_access_url": "https://theses.fr/2026AVIG0645/document",
    "topics": [
     "Spread, outbreaks and surveillance"
    ],
@@ -1737,7 +1824,10 @@
    "authors": "Eduardo Costa-Camilo et al.",
    "url": "https://doi.org/10.1016/j.mimet.2026.107477",
    "open_access_url": "https://doi.org/10.1016/j.mimet.2026.107477",
-   "topics": [],
+   "topics": [
+    "Spread, outbreaks and surveillance",
+    "Hosts, vectors and control"
+   ],
    "places": []
   },
   {
@@ -1799,89 +1889,6 @@
     "Hosts, vectors and control"
    ],
    "places": []
-  },
-  {
-   "id": "W7159562491",
-   "title": "Control d'infeccions causades per Xylella fastidiosa en Nicotiana benthamiana mitjançant lipopèptids que interaccionen amb lipopolisacàrids",
-   "date": "2026-03-12",
-   "type": "dissertation",
-   "source": "Universitat de Girona Digital Repository (Universitat de Girona)",
-   "authors": "Pau Caravaca-Fuentes",
-   "url": "https://openalex.org/W7159562491",
-   "open_access_url": "",
-   "topics": [
-    "Hosts, vectors and control"
-   ],
-   "places": [
-    "Mediterranean"
-   ]
-  },
-  {
-   "id": "W7134941271",
-   "title": "Epistemic diversity and the politics of knowledge in plant disease management: Insights from the Xylella fastidiosa epidemic in southern Italy",
-   "date": "2026-03-11",
-   "type": "article",
-   "source": "Plants People Planet",
-   "authors": "Fabio Gatti et al.",
-   "url": "https://doi.org/10.1002/ppp3.70176",
-   "open_access_url": "https://doi.org/10.1002/ppp3.70176",
-   "topics": [
-    "Spread, outbreaks and surveillance"
-   ],
-   "places": [
-    "Italy",
-    "Puglia"
-   ]
-  },
-  {
-   "id": "W7134966580",
-   "title": "Endophytic colonization and epiphytic presence of Metarhizium brunneum alter the feeding behavior of the Xylella fastidiosa vector Philaenus spumarius",
-   "date": "2026-03-10",
-   "type": "article",
-   "source": "Journal of Pest Science",
-   "authors": "Clara Lago et al.",
-   "url": "https://doi.org/10.1007/s10340-026-02015-3",
-   "open_access_url": "https://link.springer.com/content/pdf/10.1007/s10340-026-02015-3.pdf",
-   "topics": [
-    "Hosts, vectors and control"
-   ],
-   "places": []
-  },
-  {
-   "id": "W7134973478",
-   "title": "Olive germplasm resistance to spittlebugs: an alternative approach to curb Xylella fastidiosa spread",
-   "date": "2026-03-10",
-   "type": "article",
-   "source": "Journal of Pest Science",
-   "authors": "Zeinab Hamouche et al.",
-   "url": "https://doi.org/10.1007/s10340-026-02019-z",
-   "open_access_url": "https://link.springer.com/content/pdf/10.1007/s10340-026-02019-z.pdf",
-   "topics": [
-    "Spread, outbreaks and surveillance",
-    "Hosts, vectors and control"
-   ],
-   "places": [
-    "Italy",
-    "Puglia"
-   ]
-  },
-  {
-   "id": "W7134844778",
-   "title": "Physiologically-based eco-epidemiological model of Xylella fastidiosa infection in olive groves",
-   "date": "2026-03-09",
-   "type": "article",
-   "source": "Ecological Modelling",
-   "authors": "Igor Daniel Weber et al.",
-   "url": "https://doi.org/10.1016/j.ecolmodel.2026.111546",
-   "open_access_url": "https://doi.org/10.1016/j.ecolmodel.2026.111546",
-   "topics": [
-    "Spread, outbreaks and surveillance",
-    "Hosts, vectors and control"
-   ],
-   "places": [
-    "Italy",
-    "Puglia"
-   ]
   }
  ]
 }
