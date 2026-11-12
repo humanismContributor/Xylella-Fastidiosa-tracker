@@ -131,8 +131,10 @@ def article_issue(a: dict) -> tuple[str, str, list[str]]:
                "It doesn't name a Mediterranean country in the title; check it anyway, "
                "since general articles ('New data on quarantine pests', 'New EU regulations') can include findings.\n\n")
             + "**To do**\n- [ ] Read the article\n"
-              "- [ ] New outbreak? It is added to the map automatically (look for an 'Added to the map' issue); "
-              "if it was missed, add a row to `official_outbreaks.json` by hand\n"
+              "- [ ] New outbreak? If an 'Added to the map' issue follows, review that one; otherwise (no "
+              "`ANTHROPIC_API_KEY` secret, or the finding was missed) add a row to `official_outbreaks.json` by hand "
+              "(place, coordinates of the municipality, year, subspecies, host, source link; `front: true` if it "
+              "extends the known range)\n"
               "- [ ] Status change for a country? Update `country_status.json`\n"
               "- [ ] Close this issue\n")
     return title, body, ["eppo-report"] + (["mediterranean"] if med else [])

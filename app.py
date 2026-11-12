@@ -523,10 +523,10 @@ def method_notes():
             "as lavender, rosemary, broom or ornamentals can't be seen from orbit, so those outbreaks appear as "
             "official records only.\n"
             "- **Official layers** come from EPPO, the European Commission and regional services. A weekly check "
-            "reads every new EPPO report and official document, and Claude (an AI model) adds the positive findings "
-            "it names to the map, at the centre of the municipality. These records are drawn with a dashed outline "
-            "until a person has checked them against the source; eradication, absence and survey notices are "
-            "never added.")
+            "looks for every new EPPO report and official document. New outbreaks are added to the map by a "
+            "maintainer, or automatically by Claude (an AI model) at the centre of the municipality; automatic "
+            "records are drawn with a dashed outline until a person has checked them against the source. "
+            "Eradication, absence and survey notices are never added as outbreaks.")
 
 
 def main():
