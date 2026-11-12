@@ -26,6 +26,28 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   table with enough positives, chooses on one part (seasons up to 2020, or all other regions) and
   scores on the rest, with a 100 m block bootstrap. Writes `data/calibration/rule_replay.json`.
   Re-run after new campaigns before changing `PARAMS`.
+- `scene_inventory.py` (run by hand, standard library only): phase 0 of the hyperspectral/thermal
+  test. Counts usable summer overpasses of PRISMA (from a portal export, `--prisma-csv`), EnMAP,
+  ECOSTRESS and Landsat 8/9 over the two Monopoli regions from catalogue metadata, with a go/no-go
+  per sensor, in `data/calibration/scene_inventory.json`. Downloads no imagery.
+- `sample_thermal.py` (run by hand, conda packages): Landsat 8/9 surface temperature at every tree
+  in the OSAVI tables, as each summer's median anomaly against the region's judged cells, in
+  `.cache/thermal/` (same row order as the OSAVI tables). Not committed, for the same reason as them.
+- `sample_ecostress.py` (run by hand, conda packages plus `earthaccess`, Earthdata login in
+  `~/.netrc`): the same anomaly from ECOSTRESS (70 m, midday overpasses), in `.cache/thermal_ecostress/`.
+  Tiles are cached in `.cache/ecostress/` (~170 MB).
+- `replay_thermal.py` (run by hand, `--sensor landsat|ecostress`): adds a thermal filter (anomaly
+  level or change, 0–2 K) to the current rule on every region with both tables, chooses and scores
+  as `replay_rules.py` does, with 300 m blocks, plus site checks (heat in the first summer with data,
+  within 1–2 km blocks and greenness quintiles). Writes `data/calibration/thermal_replay.json` /
+  `thermal_replay_ecostress.json` (aggregates only). First runs (Oct–Nov 2026, on the dati.puglia.it
+  2020–2023 tables of the two Monopoli regions), both sensors: as a filter it cuts false positives
+  but loses more true ones where the scanner works (Polignano, lag 1: ΔJ CI below 0), so not adopted.
+  Fasano: later positives sit on cells that were already hot in 2018, before the outbreak reached
+  them (AUC 0.90 Landsat / 0.88 ECOSTRESS; ~0.75 within 1 km blocks, 0.80–0.84 within greenness
+  classes): a standing property of the site (cause unknown: irrigation, soil, sampling), at most a
+  risk layer. Polignano: the sensors disagree (pre-outbreak heat AUC 0.63 Landsat, 0.44 ECOSTRESS
+  from 3 scenes). Re-run on the 2013–2025 campaign tables; untested out of sample as a risk predictor.
 - `puglia_samples_check.py`: weekly check of the sampling dataset on dati.puglia.it (CKAN API,
   workflow `puglia_samples.yml`, state in `puglia_samples_seen.json`). Opens one issue when a file
   is added, gets a download link or changes date, with the steps to re-run the calibration; it

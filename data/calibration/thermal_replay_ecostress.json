@@ -1,0 +1,463 @@
+{
+  "generated": "2026-11-12",
+  "source": {
+    "puglia-monopoli-fasano": {
+      "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
+      "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
+      "license": "CC BY 4.0"
+    },
+    "puglia-monopoli-polignano": {
+      "title": "Regione Puglia, Dati monitoraggio Xylella fastidiosa (campaigns 2020-2023)",
+      "url": "https://dati.puglia.it/ckan/dataset/dati-monitoraggio-xylella-fastidiosa",
+      "license": "CC BY 4.0"
+    }
+  },
+  "thermal": "ECOSTRESS LST anomaly vs judged cells (sample_ecostress.py)",
+  "candidates": [
+    "current",
+    "current + level >= 0.0 K",
+    "current + level >= 0.5 K",
+    "current + level >= 1.0 K",
+    "current + level >= 1.5 K",
+    "current + level >= 2.0 K",
+    "current + change >= 0.0 K",
+    "current + change >= 0.5 K",
+    "current + change >= 1.0 K",
+    "current + change >= 1.5 K",
+    "current + change >= 2.0 K"
+  ],
+  "selection": "highest Youden's J on the training part; cells without a thermal value keep their flag",
+  "bootstrap": "1000 resamples of 300 m blocks",
+  "separation": {
+    "puglia-monopoli-fasano": {
+      "level": {
+        "all_judged": {
+          "auc": 0.7837,
+          "trees_with_value": 66046,
+          "positives_with_value": 126
+        },
+        "flagged_by_current": {
+          "auc": 0.9319,
+          "trees_with_value": 1344,
+          "positives_with_value": 1
+        }
+      },
+      "change": {
+        "all_judged": {
+          "auc": 0.3929,
+          "trees_with_value": 65952,
+          "positives_with_value": 126
+        },
+        "flagged_by_current": {
+          "auc": 0.1735,
+          "trees_with_value": 1344,
+          "positives_with_value": 1
+        }
+      }
+    },
+    "puglia-monopoli-polignano": {
+      "level": {
+        "all_judged": {
+          "auc": 0.6408,
+          "trees_with_value": 39627,
+          "positives_with_value": 134
+        },
+        "flagged_by_current": {
+          "auc": 0.6595,
+          "trees_with_value": 763,
+          "positives_with_value": 16
+        }
+      },
+      "change": {
+        "all_judged": {
+          "auc": 0.6449,
+          "trees_with_value": 39627,
+          "positives_with_value": 134
+        },
+        "flagged_by_current": {
+          "auc": 0.7169,
+          "trees_with_value": 763,
+          "positives_with_value": 16
+        }
+      }
+    }
+  },
+  "site_checks": {
+    "puglia-monopoli-fasano": {
+      "first_summer": 2018,
+      "trees": 66046,
+      "positives": 126,
+      "auc_first_summer": 0.8807,
+      "auc_within_1km_blocks": 0.7267,
+      "auc_within_2km_blocks": 0.7911,
+      "auc_within_greenness_quintiles": 0.8024,
+      "auc_low_greenness_first_summer": 0.7925
+    },
+    "puglia-monopoli-polignano": {
+      "first_summer": 2019,
+      "trees": 39627,
+      "positives": 134,
+      "auc_first_summer": 0.4403,
+      "auc_within_1km_blocks": 0.6111,
+      "auc_within_2km_blocks": 0.4737,
+      "auc_within_greenness_quintiles": 0.4464,
+      "auc_low_greenness_first_summer": 0.4846
+    }
+  },
+  "lags": [
+    {
+      "lag": 0,
+      "splits": [
+        {
+          "split": "temporal puglia-monopoli-fasano: <= 2020 -> > 2020",
+          "train_j": {
+            "current": -0.0177,
+            "current + level >= 0.0 K": -0.0121,
+            "current + level >= 0.5 K": -0.009,
+            "current + level >= 1.0 K": -0.0072,
+            "current + level >= 1.5 K": -0.0054,
+            "current + level >= 2.0 K": -0.0027,
+            "current + change >= 0.0 K": -0.0118,
+            "current + change >= 0.5 K": -0.0091,
+            "current + change >= 1.0 K": -0.0076,
+            "current + change >= 1.5 K": -0.0048,
+            "current + change >= 2.0 K": -0.0027
+          },
+          "chosen_on_train": "current + level >= 2.0 K",
+          "test": {
+            "current": {
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0219,
+              "sensitivity": 0.0094,
+              "false_positive_rate": 0.0219,
+              "youden_j": -0.0125,
+              "relative_risk": 0.43
+            },
+            "best_thermal": {
+              "rule": "current + level >= 2.0 K",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0009,
+              "sensitivity": 0.0094,
+              "false_positive_rate": 0.0009,
+              "youden_j": 0.0085,
+              "relative_risk": 10.14,
+              "delta_j_vs_current_ci95": [
+                0.018,
+                0.0243
+              ]
+            }
+          }
+        },
+        {
+          "split": "temporal puglia-monopoli-polignano: <= 2020 -> > 2020",
+          "train_j": {
+            "current": 0.1899,
+            "current + level >= 0.0 K": 0.1607,
+            "current + level >= 0.5 K": 0.1776,
+            "current + level >= 1.0 K": 0.1869,
+            "current + level >= 1.5 K": -0.0096,
+            "current + level >= 2.0 K": -0.0062,
+            "current + change >= 0.0 K": 0.2123,
+            "current + change >= 0.5 K": 0.1865,
+            "current + change >= 1.0 K": 0.194,
+            "current + change >= 1.5 K": 0.0908,
+            "current + change >= 2.0 K": -0.0034
+          },
+          "chosen_on_train": "current + change >= 0.0 K",
+          "test": {
+            "current": {
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0094,
+              "sensitivity": 0.0361,
+              "false_positive_rate": 0.0094,
+              "youden_j": 0.0268,
+              "relative_risk": 3.94
+            },
+            "best_thermal": {
+              "rule": "current + change >= 0.0 K",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0051,
+              "sensitivity": 0.012,
+              "false_positive_rate": 0.0051,
+              "youden_j": 0.007,
+              "relative_risk": 2.38,
+              "delta_j_vs_current_ci95": [
+                -0.0946,
+                0.0054
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-polignano -> puglia-monopoli-fasano",
+          "train_j": {
+            "current": 0.1005,
+            "current + level >= 0.0 K": 0.0908,
+            "current + level >= 0.5 K": 0.0948,
+            "current + level >= 1.0 K": 0.0826,
+            "current + level >= 1.5 K": 0.0049,
+            "current + level >= 2.0 K": -0.0015,
+            "current + change >= 0.0 K": 0.093,
+            "current + change >= 0.5 K": 0.0816,
+            "current + change >= 1.0 K": 0.0841,
+            "current + change >= 1.5 K": 0.0353,
+            "current + change >= 2.0 K": -0.001
+          },
+          "chosen_on_train": "current + level >= 0.5 K",
+          "test": {
+            "current": {
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0203,
+              "sensitivity": 0.0079,
+              "false_positive_rate": 0.0204,
+              "youden_j": -0.0124,
+              "relative_risk": 0.39
+            },
+            "best_thermal": {
+              "rule": "current + level >= 0.5 K",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0092,
+              "sensitivity": 0.0079,
+              "false_positive_rate": 0.0092,
+              "youden_j": -0.0013,
+              "relative_risk": 0.86,
+              "delta_j_vs_current_ci95": [
+                0.0095,
+                0.0131
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-fasano -> puglia-monopoli-polignano",
+          "train_j": {
+            "current": -0.0124,
+            "current + level >= 0.0 K": -0.0042,
+            "current + level >= 0.5 K": -0.0013,
+            "current + level >= 1.0 K": 0.0014,
+            "current + level >= 1.5 K": 0.0042,
+            "current + level >= 2.0 K": 0.0063,
+            "current + change >= 0.0 K": -0.0133,
+            "current + change >= 0.5 K": -0.0094,
+            "current + change >= 1.0 K": -0.0058,
+            "current + change >= 1.5 K": -0.0029,
+            "current + change >= 2.0 K": -0.0014
+          },
+          "chosen_on_train": "current + level >= 2.0 K",
+          "test": {
+            "current": {
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0193,
+              "sensitivity": 0.1194,
+              "false_positive_rate": 0.0189,
+              "youden_j": 0.1005,
+              "relative_risk": 6.91
+            },
+            "best_thermal": {
+              "rule": "current + level >= 2.0 K",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0015,
+              "sensitivity": 0.0,
+              "false_positive_rate": 0.0015,
+              "youden_j": -0.0015,
+              "relative_risk": 0.0,
+              "delta_j_vs_current_ci95": [
+                -0.1547,
+                -0.0124
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "lag": 1,
+      "splits": [
+        {
+          "split": "temporal puglia-monopoli-fasano: <= 2020 -> > 2020",
+          "train_j": {
+            "current": 0.0882,
+            "current + level >= 0.0 K": 0.063,
+            "current + level >= 0.5 K": 0.0196,
+            "current + level >= 1.0 K": 0.0274,
+            "current + level >= 1.5 K": 0.0344,
+            "current + level >= 2.0 K": -0.0076,
+            "current + change >= 0.0 K": -0.0366,
+            "current + change >= 0.5 K": -0.0256,
+            "current + change >= 1.0 K": -0.0146,
+            "current + change >= 1.5 K": -0.0074,
+            "current + change >= 2.0 K": -0.0034
+          },
+          "chosen_on_train": "current + level >= 0.0 K",
+          "test": {
+            "current": {
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0282,
+              "sensitivity": 0.0189,
+              "false_positive_rate": 0.0282,
+              "youden_j": -0.0094,
+              "relative_risk": 0.66
+            },
+            "best_thermal": {
+              "rule": "current + level >= 0.0 K",
+              "trees": 41555,
+              "positive": 106,
+              "flagged_share": 0.0159,
+              "sensitivity": 0.0094,
+              "false_positive_rate": 0.0159,
+              "youden_j": -0.0064,
+              "relative_risk": 0.59,
+              "delta_j_vs_current_ci95": [
+                -0.076,
+                0.0145
+              ]
+            }
+          }
+        },
+        {
+          "split": "temporal puglia-monopoli-polignano: <= 2020 -> > 2020",
+          "train_j": {
+            "current": 0.6299,
+            "current + level >= 0.0 K": 0.624,
+            "current + level >= 0.5 K": 0.6261,
+            "current + level >= 1.0 K": 0.2705,
+            "current + level >= 1.5 K": -0.0187,
+            "current + level >= 2.0 K": -0.0133,
+            "current + change >= 0.0 K": 0.2892,
+            "current + change >= 0.5 K": 0.2712,
+            "current + change >= 1.0 K": 0.2869,
+            "current + change >= 1.5 K": 0.0892,
+            "current + change >= 2.0 K": -0.0038
+          },
+          "chosen_on_train": "current + level >= 0.5 K",
+          "test": {
+            "current": {
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.0195,
+              "sensitivity": 0.2771,
+              "false_positive_rate": 0.0189,
+              "youden_j": 0.2582,
+              "relative_risk": 19.26
+            },
+            "best_thermal": {
+              "rule": "current + level >= 0.5 K",
+              "trees": 32796,
+              "positive": 83,
+              "flagged_share": 0.007,
+              "sensitivity": 0.0482,
+              "false_positive_rate": 0.0068,
+              "youden_j": 0.0413,
+              "relative_risk": 7.23,
+              "delta_j_vs_current_ci95": [
+                -0.3727,
+                -0.0839
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-polignano -> puglia-monopoli-fasano",
+          "train_j": {
+            "current": 0.4157,
+            "current + level >= 0.0 K": 0.3433,
+            "current + level >= 0.5 K": 0.275,
+            "current + level >= 1.0 K": 0.1234,
+            "current + level >= 1.5 K": 0.01,
+            "current + level >= 2.0 K": 0.0044,
+            "current + change >= 0.0 K": 0.1967,
+            "current + change >= 0.5 K": 0.1364,
+            "current + change >= 1.0 K": 0.1342,
+            "current + change >= 1.5 K": 0.0418,
+            "current + change >= 2.0 K": -0.0013
+          },
+          "chosen_on_train": "current + level >= 0.0 K",
+          "test": {
+            "current": {
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0407,
+              "sensitivity": 0.0397,
+              "false_positive_rate": 0.0407,
+              "youden_j": -0.001,
+              "relative_risk": 0.97
+            },
+            "best_thermal": {
+              "rule": "current + level >= 0.0 K",
+              "trees": 66046,
+              "positive": 126,
+              "flagged_share": 0.0237,
+              "sensitivity": 0.0238,
+              "false_positive_rate": 0.0237,
+              "youden_j": 0.0001,
+              "relative_risk": 1.0,
+              "delta_j_vs_current_ci95": [
+                -0.093,
+                0.0184
+              ]
+            }
+          }
+        },
+        {
+          "split": "spatial puglia-monopoli-fasano -> puglia-monopoli-polignano",
+          "train_j": {
+            "current": -0.001,
+            "current + level >= 0.0 K": 0.0001,
+            "current + level >= 0.5 K": -0.0031,
+            "current + level >= 1.0 K": 0.0024,
+            "current + level >= 1.5 K": 0.0077,
+            "current + level >= 2.0 K": 0.0043,
+            "current + change >= 0.0 K": -0.0254,
+            "current + change >= 0.5 K": -0.0177,
+            "current + change >= 1.0 K": -0.0099,
+            "current + change >= 1.5 K": -0.0045,
+            "current + change >= 2.0 K": -0.0019
+          },
+          "chosen_on_train": "current + level >= 1.5 K",
+          "test": {
+            "current": {
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.0334,
+              "sensitivity": 0.4478,
+              "false_positive_rate": 0.032,
+              "youden_j": 0.4157,
+              "relative_risk": 23.44
+            },
+            "best_thermal": {
+              "rule": "current + level >= 1.5 K",
+              "trees": 39627,
+              "positive": 134,
+              "flagged_share": 0.005,
+              "sensitivity": 0.0149,
+              "false_positive_rate": 0.0049,
+              "youden_j": 0.01,
+              "relative_risk": 3.03,
+              "delta_j_vs_current_ci95": [
+                -0.5613,
+                -0.2488
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "caveats": [
+    "Sampling is targeted, not random: inspectors favour symptomatic trees and the buffer and containment zones, and stop sampling once an area is declared infected.",
+    "Cells the scanner never judges (built-up land, non-WorldCover classes) count as not flagged, because state.npz does not store the land mask.",
+    "Outside the infected zone, positive trees must be removed, and in eradication areas also the host plants within 50 m (Reg. (EU) 2020/1201, https://eur-lex.europa.eu/eli/reg_impl/2020/1201/oj). Removal looks like decline to the scanner. A flag in the season after a positive (lag 1) may show the eradication rather than the disease.",
+    "About a third of positives had no symptoms; no canopy-based method can see those.",
+    "Coordinates are those recorded by the inspectors; a tree near a cell edge may be matched to the wrong cell, which the 3 x 3 window only partly absorbs.",
+    "The thermal value is a 70-100 m pixel: it describes the patch, not the tree."
+  ]
+}
