@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-05",
+ "checked": "2026-11-12",
  "query": "xylella fastidiosa",
  "source": "OpenAlex (https://openalex.org), CC0",
  "seen_ids": [
@@ -304,9 +304,51 @@
   "W7224093414",
   "W7224617499",
   "W7225031381",
-  "W7225157965"
+  "W7225157965",
+  "W7225451399",
+  "W7225569986",
+  "W7225586989",
+  "W7225597456"
  ],
  "recent": [
+  {
+   "id": "W7225569986",
+   "title": "Primi ritrovamenti di insetti xilemomizi positivi a Xylella fastidiosa subsp. multiplex nell'area del Monte Argentario",
+   "date": "2026-11-08",
+   "type": "article",
+   "source": "",
+   "authors": "Anita Nencioni et al.",
+   "url": "https://doi.org/10.13140/rg.2.2.26067.75049",
+   "open_access_url": "",
+   "topics": [],
+   "places": []
+  },
+  {
+   "id": "W7225586989",
+   "title": "Advancements in the study of Xylella fastidiosa vectors: biology and biometrics of Philaenus italosignus juveniles",
+   "date": "2026-11-08",
+   "type": "article",
+   "source": "",
+   "authors": "Matteo Bracalini et al.",
+   "url": "https://doi.org/10.13140/rg.2.2.19356.86404",
+   "open_access_url": "",
+   "topics": [
+    "Hosts, vectors and control"
+   ],
+   "places": []
+  },
+  {
+   "id": "W7225597456",
+   "title": "Prevalence of natural infections of Xylella fastidiosa subsp. multiplex ST87 across plant species at",
+   "date": "2026-11-08",
+   "type": "article",
+   "source": "",
+   "authors": "Domenico Rizzo",
+   "url": "https://doi.org/10.13140/rg.2.2.31939.77601",
+   "open_access_url": "",
+   "topics": [],
+   "places": []
+  },
   {
    "id": "W7225157965",
    "title": "Estrategias de saneamiento para la conservación de variedades locales de almendro infectadas por Xylella fastidiosa",
@@ -318,6 +360,25 @@
    "open_access_url": "",
    "topics": [],
    "places": []
+  },
+  {
+   "id": "W7225451399",
+   "title": "Inferring the Potential Spread of Xylella fastidiosa in Great Britain With a Mechanistic Landscape‐Scale Model",
+   "date": "2026-11-01",
+   "type": "article",
+   "source": "Plant Pathology",
+   "authors": "Flavia Occhibove et al.",
+   "url": "https://doi.org/10.1111/ppa.70322",
+   "open_access_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/ppa.70322",
+   "topics": [
+    "Spread, outbreaks and surveillance",
+    "Detection and remote sensing",
+    "Hosts, vectors and control"
+   ],
+   "places": [
+    "Italy",
+    "Puglia"
+   ]
   },
   {
    "id": "W7224617499",
@@ -387,7 +448,7 @@
    "source": "ISME Communications",
    "authors": "Olakunle I. Olawole et al.",
    "url": "https://doi.org/10.1093/ismeco/ycag291",
-   "open_access_url": "https://doi.org/10.1093/ismeco/ycag291",
+   "open_access_url": "https://academic.oup.com/ismecommun/advance-article-pdf/doi/10.1093/ismeco/ycag291/71907741/ycag291.pdf",
    "topics": [
     "Hosts, vectors and control"
    ],
@@ -514,7 +575,7 @@
    "source": "Phytopathology",
    "authors": "Gianni Gilioli et al.",
    "url": "https://doi.org/10.1094/phyto-04-26-0114-r",
-   "open_access_url": "",
+   "open_access_url": "http://hdl.handle.net/10261/447293",
    "topics": [
     "Spread, outbreaks and surveillance",
     "Detection and remote sensing",
@@ -899,7 +960,7 @@
    "source": "Plant Disease",
    "authors": "Miri Vanunu et al.",
    "url": "https://doi.org/10.1094/pdis-02-26-0369-re",
-   "open_access_url": "",
+   "open_access_url": "http://hdl.handle.net/10261/447288",
    "topics": [
     "Hosts, vectors and control"
    ],
@@ -912,7 +973,7 @@
    "title": "Dinâmica da colonização e multiplicação de Xylella fastidiosa subsp. pauca influenciada pela temperatura",
    "date": "2026-07-21",
    "type": "dissertation",
-   "source": "",
+   "source": "Digital Library of Theses and Dissertations  (Universidade de São Paulo)",
    "authors": "Maria Oliveira",
    "url": "https://doi.org/10.11606/d.11.2026.tde-14102026-161145",
    "open_access_url": "",
@@ -1285,7 +1346,7 @@
    "source": "Phytopathology",
    "authors": "Miranda Tomás et al.",
    "url": "https://doi.org/10.1094/phyto-04-25-0141-r",
-   "open_access_url": "http://hdl.handle.net/10261/438079",
+   "open_access_url": "https://doi.org/10.1094/PHYTO-04-25-0141-R",
    "topics": [
     "Hosts, vectors and control"
    ],
@@ -1539,13 +1600,13 @@
   },
   {
    "id": "W7160280131",
-   "title": "Pathobiome: Driven Innovations in Sustainable Olive Disease Management",
+   "title": "Pathobiome",
    "date": "2026-05-05",
    "type": "article",
    "source": "International Journal of Agriculture Innovations and Cutting-Edge Research (HEC Recognised)",
    "authors": "Misbah-Ud-Din Ahmed et al.",
-   "url": "https://doi.org/10.5281/zenodo.20040232",
-   "open_access_url": "https://doi.org/10.5281/zenodo.20040232",
+   "url": "https://doi.org/10.67244/jai.bwo-researches.v4i2.a235",
+   "open_access_url": "https://jai.bwo-researches.com/index.php/jwr/article/download/235/211",
    "topics": [
     "Hosts, vectors and control"
    ],
@@ -1720,7 +1781,7 @@
    "title": "Une épidémio-surveillance augmentée de Xylella fastidiosa basée sur le risque",
    "date": "2026-04-07",
    "type": "dissertation",
-   "source": "",
+   "source": "theses.fr (ABES)",
    "authors": "Camille Portes",
    "url": "https://doi.org/10.70675/04574aabz3646z425dzae3eza0632c67ba8b",
    "open_access_url": "https://theses.fr/2026AVIG0645/document",
@@ -1824,70 +1885,7 @@
    "authors": "Eduardo Costa-Camilo et al.",
    "url": "https://doi.org/10.1016/j.mimet.2026.107477",
    "open_access_url": "https://doi.org/10.1016/j.mimet.2026.107477",
-   "topics": [
-    "Spread, outbreaks and surveillance",
-    "Hosts, vectors and control"
-   ],
-   "places": []
-  },
-  {
-   "id": "W7140293042",
-   "title": "Resisting Xylella fastidiosa : xylem anatomical changes in the susceptible olive cultivar Cellina di Nardò after long‐term infection",
-   "date": "2026-03-25",
-   "type": "article",
-   "source": "Plant Biology",
-   "authors": "Erika Sabella et al.",
-   "url": "https://doi.org/10.1111/plb.70210",
-   "open_access_url": "https://doi.org/10.1111/plb.70210",
-   "topics": [
-    "Hosts, vectors and control"
-   ],
-   "places": [
-    "Italy",
-    "Puglia"
-   ]
-  },
-  {
-   "id": "W7140843566",
-   "title": "A metabolic model based on a pangenome core unveils new biochemical features of the phytopathogen Xylella fastidiosa",
-   "date": "2026-03-25",
-   "type": "preprint",
-   "source": "bioRxiv (Cold Spring Harbor Laboratory)",
-   "authors": "Paola Corbín-Agustí et al.",
-   "url": "https://doi.org/10.64898/2026.03.23.713690",
-   "open_access_url": "https://doi.org/10.64898/2026.03.23.713690",
-   "topics": [
-    "Hosts, vectors and control"
-   ],
-   "places": []
-  },
-  {
-   "id": "W7139994728",
-   "title": "Complexity-based metrics for discerning Xylella fastidiosa-infected olive groves in MODIS evapotranspiration satellite data",
-   "date": "2026-03-21",
-   "type": "article",
-   "source": "Physica A Statistical Mechanics and its Applications",
-   "authors": "Luciano Telesca et al.",
-   "url": "https://doi.org/10.1016/j.physa.2026.131479",
-   "open_access_url": "https://doi.org/10.1016/j.physa.2026.131479",
-   "topics": [
-    "Detection and remote sensing"
-   ],
-   "places": []
-  },
-  {
-   "id": "W7138921787",
-   "title": "An investigation of the presence of Xylella fastidiosa in Cicadomorpha specimens collected in different habitats in Poland",
-   "date": "2026-03-18",
-   "type": "article",
-   "source": "Plant Protection Science",
-   "authors": "Monika Kałużna et al.",
-   "url": "https://doi.org/10.17221/207/2024-pps",
-   "open_access_url": "https://pps.agriculturejournals.cz/attachments/000832.pdf",
-   "topics": [
-    "Spread, outbreaks and surveillance",
-    "Hosts, vectors and control"
-   ],
+   "topics": [],
    "places": []
   }
  ]
