@@ -3,6 +3,7 @@ import json
 
 import pytest
 
+import auto_outbreaks as ao
 import eppo_check as ec
 
 ARTS = [("2026/216", "2026-09", "First report of <i>Xylella fastidiosa</i> subsp. multiplex in Basilicata region (Italy)", 8512),
@@ -42,6 +43,7 @@ def test_parsers():
 @pytest.fixture
 def files(tmp_path, monkeypatch):
     monkeypatch.setattr(ec, "SEEN_FILE", tmp_path / "eppo_seen.json")
+    monkeypatch.setattr(ao, "LEADS_FILE", tmp_path / "auto_leads.json")
     issues = []
     monkeypatch.setattr(ec, "open_issue", lambda t, b, l: issues.append((t, l, b)))
 
@@ -65,6 +67,9 @@ def test_bootstrap_then_changes(files):
     assert len(issues) == 2
     assert issues[0][0].startswith("EPPO 2026/216") and "mediterranean" in issues[0][1]
     assert "| Greece (GR) | (not listed) | Present, few occurrences |" in issues[1][2]
+    leads = json.loads((tmp / "auto_leads.json").read_text())["leads"]
+    assert [x["url"] for x in leads] == ["https://gd.eppo.int/reporting/article-8512"]   # queued for the map
+    assert leads[0]["source"] == "EPPO Reporting Service 2026/216"
     issues.clear()
     assert ec.main(["--from-files", r2, d2]) == 0 and issues == []
 

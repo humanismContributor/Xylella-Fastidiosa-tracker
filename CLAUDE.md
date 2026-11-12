@@ -30,8 +30,16 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   workflow `puglia_samples.yml`, state in `puglia_samples_seen.json`). Opens one issue when a file
   is added, gets a download link or changes date, with the steps to re-run the calibration; it
   never downloads the data or changes `SAMPLES_URL` itself.
-- `eppo_check.py`: weekly EPPO check that opens GitHub issues (workflow `eppo.yml`). Records are
-  added to `official_outbreaks.json` / `country_status.json` by hand after review, never automatically.
+- `eppo_check.py`: weekly EPPO check that opens GitHub issues (workflow `eppo.yml`). New articles
+  are queued in `auto_leads.json`; `country_status.json` is still updated by hand.
+- `official_check.py`: weekly check of the other sources in `official_sources.json` (workflow
+  `official.yml`); one issue per changed source, and new documents queued in `auto_leads.json`.
+- `auto_outbreaks.py`: runs after both checks. Claude (`claude-opus-5-5`, repository secret
+  `ANTHROPIC_API_KEY`) lists the positive findings in each queued document; they are geocoded to the
+  town with Nominatim and appended to `official_outbreaks.json` with `"auto": true, "reviewed": false`,
+  plus an `auto-added` issue. Guards: high confidence only, countries in `country_status.json`, not
+  within 5 km of a record on the map, at most 10 findings per document. Without the secret the queue
+  waits. Try one document with `python auto_outbreaks.py --url <url> --dry-run`.
 - `literature_check.py`: weekly OpenAlex search for new Xylella papers, one digest issue per week and
   the newest 100 in `data/literature.json` (workflow `literature.yml`). Papers are leads, not records.
 
@@ -43,6 +51,8 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   keeps the previous results, by design.
 - Thresholds are inferred from the literature, not calibrated against field data. Say so in any
   user-facing text; a flagged area is a lead for inspection, never a Xylella finding.
+- An automatic record stays drawn as unreviewed (dashed, no spread rings) until a person sets
+  `"reviewed": true`. Eradication, absence and survey notices must never become map points.
 - The app must stay light: don't draw full-size data on the map (basin layer is capped at 2,500
   squares, large files are cached with `st.cache_resource` and treated as read-only).
 

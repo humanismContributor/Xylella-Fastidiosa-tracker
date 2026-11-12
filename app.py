@@ -19,6 +19,8 @@ STATUS = {
 }
 RECORD_NEW = "#F59E0B"
 RECORD_OLD = "#991B1B"
+UNREVIEWED_NOTE = ("Added automatically from the official source and not yet reviewed: "
+                   "the place, year or subspecies may be wrong.")
 PROJECTION = "#7C3AED"
 ROLE_TEXT = {
     "established": "Inside the official infected zone: decline here is expected, and flagged areas mostly show how fast groves are still being lost.",
@@ -204,9 +206,15 @@ def legend(items):
     st.markdown(f'<div style="font-size:0.9rem">{spans}</div>', unsafe_allow_html=True)
 
 
+def unreviewed(r) -> bool:
+    """Added by auto_outbreaks.py and not yet confirmed by a person."""
+    return r.get("auto", False) and not r.get("reviewed", False)
+
+
 def record_popup(r):
     return folium.Popup(
-        f"<b>{html.escape(r['place'])}</b> ({html.escape(r['country'])})<br>"
+        (f"<i>{html.escape(UNREVIEWED_NOTE)}</i><br>" if unreviewed(r) else "")
+        + f"<b>{html.escape(r['place'])}</b> ({html.escape(r['country'])})<br>"
         f"{r['year']}: {html.escape(r['kind'])}<br>"
         f"Subspecies: {html.escape(r['subspecies'])}; host: {html.escape(r['host'])}<br>"
         f"Satellite monitoring: {html.escape(satellite_fit(r['host']))}<br>"
@@ -218,14 +226,16 @@ def add_records(m, recs, upto, highlight_year):
     for r in sorted(recs, key=lambda r: r["year"]):
         if r["year"] > upto:
             continue
-        new = r["year"] == highlight_year
+        new, auto = r["year"] == highlight_year, unreviewed(r)
         folium.CircleMarker(
             location=[r["lat"], r["lon"]],
             radius=9 if new else 6,
-            color="#111827" if new else RECORD_OLD,
-            weight=2 if new else 1,
-            fill=True, fill_color=RECORD_NEW if new else RECORD_OLD, fill_opacity=0.95 if new else 0.7,
-            tooltip=f"{r['place']}: {r['year']} ({r['subspecies']})",
+            color="#111827" if new or auto else RECORD_OLD,
+            weight=2 if new or auto else 1,
+            dash_array="3 3" if auto else None,
+            fill=True, fill_color=RECORD_NEW if new else RECORD_OLD,
+            fill_opacity=0.35 if auto else 0.95 if new else 0.7,
+            tooltip=f"{r['place']}: {r['year']} ({r['subspecies']})" + (" · not yet reviewed" if auto else ""),
             popup=record_popup(r),
         ).add_to(m)
 
@@ -233,7 +243,7 @@ def add_records(m, recs, upto, highlight_year):
 def add_projection(m, recs, upto, years_ahead=3):
     layer = folium.FeatureGroup(name="Projected natural spread", show=True)
     for r in recs:
-        if not r.get("front") or not (upto - 2 <= r["year"] <= upto):
+        if not r.get("front") or unreviewed(r) or not (upto - 2 <= r["year"] <= upto):
             continue
         km, _ = SPREAD["pauca"] if r["subspecies"] == "pauca" else SPREAD["other"]
         for k in range(years_ahead, 0, -1):
@@ -340,6 +350,8 @@ def overview(regs, recs):
 
     items = [(f"background:{RECORD_NEW};border:2px solid #111827;border-radius:50%", f"Reported in {upto}"),
              (f"background:{RECORD_OLD};border-radius:50%", "Reported earlier"),
+             (f"background:rgba(153,27,27,.35);border:2px dashed #111827;border-radius:50%",
+              "Added automatically, not yet reviewed"),
              (f"border:1px dashed {PROJECTION};background:rgba(124,58,237,.12);border-radius:50%",
               "Reach after 1, 2 and 3 years of natural spread"),
              ("border:2px solid #2563EB", "Detailed scan area")]
@@ -405,7 +417,8 @@ def overview(regs, recs):
     with st.expander(f"Records from {upto}"):
         rows = [{"Place": r["place"], "Country": r["country"], "Subspecies": r["subspecies"],
                  "Host": r["host"], "Satellite monitoring": satellite_fit(r["host"]),
-                 "What happened": r["kind"], "Source": r["source_url"]}
+                 "What happened": r["kind"], "Reviewed": "No, added automatically" if unreviewed(r) else "Yes",
+                 "Source": r["source_url"]}
                 for r in recs if r["year"] == upto]
         if rows:
             st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch",
@@ -509,8 +522,11 @@ def method_notes():
             "gradual; they are scanned only inside almond-orchard parcels from the farm-parcel register. Hosts such "
             "as lavender, rosemary, broom or ornamentals can't be seen from orbit, so those outbreaks appear as "
             "official records only.\n"
-            "- **Official layers** come from EPPO, the European Commission and regional services. A weekly check of "
-            "EPPO opens a GitHub issue for every new report; it is reviewed before it is added to the map.")
+            "- **Official layers** come from EPPO, the European Commission and regional services. A weekly check "
+            "looks for every new EPPO report and official document. New outbreaks are added to the map by a "
+            "maintainer, or automatically by Claude (an AI model) at the centre of the municipality; automatic "
+            "records are drawn with a dashed outline until a person has checked them against the source. "
+            "Eradication, absence and survey notices are never added as outbreaks.")
 
 
 def main():
