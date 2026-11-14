@@ -5,7 +5,9 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
 
 ## How the pieces fit
 - `xylella_scanner.py`: weekly 10 m Sentinel-2 scan of the areas in `regions.json`
-  (workflow `main.yml`). Per-cell history in `data/<region>/state.npz`.
+  (workflow `main.yml`). Per-cell history in `data/<region>/state.npz`. The workflow's plan job
+  (`--plan`, numpy only) starts scan jobs only for regions whose latest season isn't final yet;
+  the others just get `last_checked` updated.
 - `basin_scanner.py`: yearly 100 m screen of the olive belt in `basin.json`, in 1° cells
   (workflow `basin.yml`, Sept–Nov, at most 16 parallel jobs so the weekly scan always gets a runner). Output in `data/basin/`.
 - `crop_masks.py`: parcel masks from farm registers (SIGPAC Balearics so far) for non-olive profiles.

@@ -1,10 +1,11 @@
 name: Tests
 
-# Runs the synthetic-data tests on every push and pull request. They need only
+# Runs the synthetic-data tests on pull requests and pushes to main. They need only
 # numpy, scipy and pytest, so this takes well under a minute.
 
 on:
   push:
+    branches: [main]
     paths: ["**.py", "regions.json", "basin.json", "tests/**", ".github/workflows/tests.yml"]
   pull_request:
   workflow_dispatch:
