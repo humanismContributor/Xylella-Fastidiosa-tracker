@@ -110,3 +110,30 @@ def test_plan_skips_final_regions_without_loading(env, monkeypatch, capsys):
     assert env.loads == []
     status = json.loads((env.out / "test-region" / "status.json").read_text())
     assert status["last_checked"] == "2026-11-09" and status["scan_date"] == "2026-10-21"
+
+
+def test_landmask_saved_and_added_once_to_old_state(env, monkeypatch, capsys):
+    xs.scan_region(REGION, dt.date(2026, 10, 21))
+    path = env.out / "test-region" / "state.npz"
+    st = xs.load_state(path)
+    assert st["landmask"] is not None and st["landmask"].shape == (H, W) and xs.load_meta(path)["landmask"]
+
+    # A state file written before masks were saved: no array, no flag in meta
+    meta = {k: v for k, v in st.items() if k not in ("flagged", "recovered", "landmask")}
+    meta.pop("landmask", None)
+    np.savez_compressed(path, flagged=st["flagged"], recovered=st["recovered"], meta=np.array(json.dumps(meta)))
+    monkeypatch.setattr(xs, "load_regions", lambda: [REGION])
+    capsys.readouterr()
+    assert xs.main(["--plan", "--today", "2026-11-09"]) == 0
+    assert json.loads(capsys.readouterr().out) == ["test-region"]      # one job to add the mask
+
+    monkeypatch.setattr(xs, "build_landmask", lambda c, g, b, rid, **kw: (np.ones((H, W), bool),
+                                                                       {"worldcover": "ESA WorldCover 2021"}))
+    env.loads.clear()
+    xs.scan_region(REGION, dt.date(2026, 11, 9))
+    assert env.loads == []                                              # no season re-judged
+    after = xs.load_state(path)
+    assert after["landmask"] is not None and (after["flagged"] == st["flagged"]).all()
+    capsys.readouterr()
+    xs.main(["--plan", "--today", "2026-11-16"])
+    assert json.loads(capsys.readouterr().out) == []

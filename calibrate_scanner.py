@@ -67,8 +67,6 @@ SPECIES_PREFIX = "Olivo"     # the Puglia regions use the olive profile
 CAVEATS = [
     "Sampling is targeted, not random: inspectors favour symptomatic trees and the buffer and "
     "containment zones, and stop sampling once an area is declared infected.",
-    "Cells the scanner never judges (built-up land, non-WorldCover classes) count as not flagged, "
-    "because state.npz does not store the land mask.",
     "Outside the infected zone, positive trees must be removed, and in eradication areas also the "
     "host plants within 50 m (Reg. (EU) 2020/1201, https://eur-lex.europa.eu/eli/reg_impl/2020/1201/oj). "
     "Removal looks like decline to the scanner. A flag in the season "
@@ -246,6 +244,14 @@ def evaluate_region(region: dict, state: dict, samples: dict, radius: int = RADI
     bits, inside = window_bits(state["flagged"], state["recovered"], rows, cols, radius)
     judged = samples["season"] >= xs.FIRST_SEASON
     keep = inside & judged
+    landmask = state.get("landmask")
+    if landmask is not None:          # trees in cells the scanner never judges can't be scored
+        h, w = landmask.shape
+        keep &= landmask[rows.clip(0, h - 1), cols.clip(0, w - 1)]
+        land_note = "Only trees in cells the scanner judges are scored (land mask saved with the scan)."
+    else:
+        land_note = ("Cells the scanner never judges (built-up land, non-WorldCover classes) count as "
+                     "not flagged, because this state.npz predates saved land masks.")
     if not keep.any():
         return None
     bits, seasons = bits[keep], samples["season"][keep]
@@ -274,7 +280,8 @@ def evaluate_region(region: dict, state: dict, samples: dict, radius: int = RADI
         "samples_on_grid": int(keep.sum()),
         "positives_on_grid": int(pos.sum()),
         "results": out_lags,
-        "caveats": CAVEATS,
+        "land_mask": landmask is not None,
+        "caveats": [*CAVEATS, land_note],
     }
 
 

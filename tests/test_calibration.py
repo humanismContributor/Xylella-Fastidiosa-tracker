@@ -125,3 +125,17 @@ def test_evaluate_region_end_to_end(grid):
 def test_evaluate_region_without_samples_on_grid(grid):
     samples = cal.read_samples(io.StringIO(CSV_HEADER + row("01/09/2021", 45.0, 12.0)))
     assert cal.evaluate_region({"id": "t", "name": "test"}, grid, samples) is None
+
+
+def test_evaluate_region_leaves_out_unjudged_cells(grid):
+    text = io.StringIO(CSV_HEADER + row("01/09/2021", 40.95, 17.25, result="Positivo"))
+    samples = cal.read_samples(text)
+    res = cal.evaluate_region({"id": "t", "name": "test"}, grid, samples)
+    assert res["samples_on_grid"] == 1 and res["land_mask"] is False
+    assert any("predates saved land masks" in c for c in res["caveats"])
+    grid["landmask"] = np.ones((20, 20), bool)
+    grid["landmask"][10, 10] = False                 # the tree's own cell is built-up
+    assert cal.evaluate_region({"id": "t", "name": "test"}, grid, samples) is None
+    grid["landmask"][10, 10] = True
+    res = cal.evaluate_region({"id": "t", "name": "test"}, grid, samples)
+    assert res["samples_on_grid"] == 1 and res["land_mask"] is True
