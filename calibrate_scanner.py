@@ -191,6 +191,41 @@ def window_bits(flagged, recovered, rows, cols, radius: int = RADIUS_PX):
     return bits, inside
 
 
+TIMING = ("before", "same_season", "only_after", "never")
+
+
+def flag_timing(bits, seasons, complete_through: int):
+    """When each tree's window was first flagged, relative to its sampling season:
+    'before' (a lead the scanner had already given), 'same_season', 'only_after'
+    (first flagged in a later season: often the mandatory removal of a positive
+    tree and its neighbours, not the disease spreading) or 'never' (through the
+    last complete season)."""
+    b = bits.astype(np.uint64)
+    s = np.asarray(seasons, np.int64) - xs.BIT_BASE_YEAR
+    before = (b & ((np.uint64(1) << s.astype(np.uint64)) - np.uint64(1))) != 0
+    same = (b >> s.astype(np.uint64)) & np.uint64(1) != 0
+    later_mask = ((np.uint64(1) << np.uint64(complete_through - xs.BIT_BASE_YEAR + 1)) - np.uint64(1))
+    after = (b & later_mask & ~((np.uint64(1) << (s + 1).astype(np.uint64)) - np.uint64(1))) != 0
+    out = np.full(b.shape, "never", dtype=object)
+    out[after] = "only_after"
+    out[same] = "same_season"
+    out[before] = "before"
+    return out
+
+
+def timing_counts(timing, positive) -> dict:
+    """Shares of positive and negative trees in each timing class. A much larger
+    'only_after' share among positives than negatives is the removal signature."""
+    res = {}
+    for name, sel in (("positive", positive), ("negative", ~positive)):
+        t = timing[sel]
+        n = int(t.size)
+        res[name] = {"trees": n, **{k: {"n": int((t == k).sum()),
+                                         "share": round(float((t == k).sum()) / n, 4) if n else None}
+                                    for k in TIMING}}
+    return res
+
+
 def flagged_by(bits, seasons, lag: int):
     """True where any season up to and including season + lag is flagged."""
     upto = np.array([(1 << (s + lag - xs.BIT_BASE_YEAR + 1)) - 1 for s in seasons], np.uint64)
@@ -280,6 +315,12 @@ def evaluate_region(region: dict, state: dict, samples: dict, radius: int = RADI
         "samples_on_grid": int(keep.sum()),
         "positives_on_grid": int(pos.sum()),
         "results": out_lags,
+        "flag_timing": {
+            "explanation": "When each tree's 3 x 3 window was first flagged, relative to its sampling "
+                           "season. 'only_after' can be the removal of a positive tree and the hosts "
+                           "around it rather than spread; 'before' and 'same_season' are real leads.",
+            **timing_counts(flag_timing(bits, seasons, state["complete_through"]), pos),
+        },
         "land_mask": landmask is not None,
         "caveats": [*CAVEATS, land_note],
     }
@@ -332,7 +373,9 @@ def main(argv=None) -> int:
                         **{f"lag{r['lag']}": {k: r["all_trees"][k] for k in
                                               ("flagged_share", "sensitivity", "positive_rate_flagged",
                                                "positive_rate_unflagged", "relative_risk")}
-                           for r in res["results"]}})
+                           for r in res["results"]},
+                        "positives_flagged_only_after": res["flag_timing"]["positive"]["only_after"]["share"],
+                        "negatives_flagged_only_after": res["flag_timing"]["negative"]["only_after"]["share"]})
     if summary:
         xs.write_json(OUT_DIR / "summary.json", {"generated": dt.date.today().isoformat(),
                                                  "source": source, "regions": summary})

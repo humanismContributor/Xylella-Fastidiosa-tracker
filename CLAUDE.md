@@ -19,7 +19,10 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   committed.
 - `calibrate_scanner.py` (prototype, run by hand): matches those sampled trees (positives and
   negatives) to the scanner's flags in `state.npz` and writes `data/calibration/`; trees in cells the
-  land mask excludes are left out when the state has one. Reads state only,
+  land mask excludes are left out when the state has one. It also splits trees by when their cell was
+  first flagged (`flag_timing`: before, same season, only after, never); positives flagged only after
+  sampling are often the mandatory removal, not spread. Never put that on the map: it would publish
+  approximate positive locations from data without a licence. Reads state only,
   so it never triggers a rebuild. `--portal` uses the older dati.puglia.it export (CC BY 4.0, 2020–2023).
 - `sample_osavi.py` (workflow `sample_osavi.yml`, manual): the summer OSAVI of every sampled tree's
   cell for every season since 2017, plus land mask and fire flags, in `.cache/osavi/`. Not committed:
