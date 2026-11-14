@@ -558,7 +558,9 @@ def load_state(path: Path):
         return None
     with np.load(path) as z:
         meta = json.loads(str(z["meta"]))
-        return {"flagged": z["flagged"].copy(), "recovered": z["recovered"].copy(), **meta}
+        landmask = z["landmask"].copy() if "landmask" in z.files else None
+        return {"flagged": z["flagged"].copy(), "recovered": z["recovered"].copy(), **meta,
+                "landmask": landmask}
 
 
 def load_meta(path: Path):
@@ -591,8 +593,30 @@ def mark_checked(region: dict, today: dt.date) -> dict:
     return status
 
 
-def save_state(path: Path, flagged, recovered, meta: dict) -> None:
-    np.savez_compressed(path, flagged=flagged, recovered=recovered, meta=np.array(json.dumps(meta)))
+def save_state(path: Path, flagged, recovered, meta: dict, landmask=None) -> None:
+    """`landmask` = the cells the scan was allowed to judge. Kept so a check against
+    field samples can leave unjudged cells out instead of counting them as not flagged."""
+    arrays = {"flagged": flagged, "recovered": recovered}
+    if landmask is not None:
+        arrays["landmask"] = np.asarray(landmask, bool)
+    meta = {**meta, "landmask": landmask is not None}
+    np.savez_compressed(path, **arrays, meta=np.array(json.dumps(meta)))
+
+
+def save_landmask_once(region: dict, state: dict, gbox, rules: dict) -> bool:
+    """Add the land mask to a state file written before masks were saved, without
+    re-judging any season. Skipped (try again next run) if WorldCover can't be read,
+    because an unfiltered mask would not describe what was judged."""
+    import crop_masks
+    crop_masks.ensure_mask(region)
+    landmask, info = build_landmask(open_catalog(), gbox, region["bbox"], region["id"],
+                                    keep_classes=rules["keep_worldcover"])
+    if info.get("worldcover") != "ESA WorldCover 2021":
+        print(f"{region['id']}: land mask not saved ({info.get('worldcover')})")
+        return False
+    meta = {k: v for k, v in state.items() if k not in ("flagged", "recovered", "landmask")}
+    save_state(DATA_DIR / region["id"] / "state.npz", state["flagged"], state["recovered"], meta, landmask)
+    return True
 
 
 def write_json(path: Path, obj) -> None:
@@ -617,6 +641,8 @@ def scan_region(region: dict, today: dt.date) -> dict:
 
     if reuse and is_final(region, state, today):
         print(f"{region['id']}: season {latest} already final, nothing new to scan.")
+        if state.get("landmask") is None and save_landmask_once(region, state, gbox, rules):
+            print(f"{region['id']}: land mask added to state.npz")
         return mark_checked(region, today)
 
     if reuse:
@@ -707,7 +733,7 @@ def scan_region(region: dict, today: dt.date) -> dict:
             "transform": list(gbox.transform)[:6],
             "complete_through": latest if complete else latest - 1,
             "history": {str(k): v for k, v in history.items()}}
-    save_state(out / "state.npz", flagged, recovered, meta)
+    save_state(out / "state.npz", flagged, recovered, meta, landmask)
     print(f"{region['id']}: {totals} (ha), {len(features)} polygons")
     return status
 
@@ -734,7 +760,9 @@ def main(argv=None) -> int:
         for r in regions:
             if not r.get("enabled", True):
                 continue
-            if is_final(r, load_meta(DATA_DIR / r["id"] / "state.npz"), today):
+            meta = load_meta(DATA_DIR / r["id"] / "state.npz")
+            # A state file from before land masks were saved gets one scan job to add it
+            if is_final(r, meta, today) and meta.get("landmask"):
                 mark_checked(r, today)
                 print(f"{r['id']}: already final, skipped", file=sys.stderr)
             else:

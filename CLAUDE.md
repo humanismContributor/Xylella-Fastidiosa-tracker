@@ -7,7 +7,8 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
 - `xylella_scanner.py`: weekly 10 m Sentinel-2 scan of the areas in `regions.json`
   (workflow `main.yml`). Per-cell history in `data/<region>/state.npz`. The workflow's plan job
   (`--plan`, numpy only) starts scan jobs only for regions whose latest season isn't final yet;
-  the others just get `last_checked` updated.
+  the others just get `last_checked` updated. `state.npz` also keeps the land mask (cells the scan
+  may judge); a state file without one gets a single job that adds it without re-judging any season.
 - `basin_scanner.py`: yearly 100 m screen of the olive belt in `basin.json`, in 1° cells
   (workflow `basin.yml`, Sept–Nov, at most 16 parallel jobs so the weekly scan always gets a runner). Output in `data/basin/`.
 - `crop_masks.py`: parcel masks from farm registers (SIGPAC Balearics so far) for non-olive profiles.
@@ -17,7 +18,8 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   across 2017–2020, so only exact repeats are dropped. No licence is stated, so the raw data is never
   committed.
 - `calibrate_scanner.py` (prototype, run by hand): matches those sampled trees (positives and
-  negatives) to the scanner's flags in `state.npz` and writes `data/calibration/`. Reads state only,
+  negatives) to the scanner's flags in `state.npz` and writes `data/calibration/`; trees in cells the
+  land mask excludes are left out when the state has one. Reads state only,
   so it never triggers a rebuild. `--portal` uses the older dati.puglia.it export (CC BY 4.0, 2020–2023).
 - `sample_osavi.py` (workflow `sample_osavi.yml`, manual): the summer OSAVI of every sampled tree's
   cell for every season since 2017, plus land mask and fire flags, in `.cache/osavi/`. Not committed:
