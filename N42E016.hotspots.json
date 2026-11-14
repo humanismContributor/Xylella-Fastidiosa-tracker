@@ -1,0 +1,1 @@
+[{"type": "Feature", "geometry": {"type": "Polygon", "coordinates": [[[16.061, 43.013], [16.123, 43.012], [16.122, 42.967], [16.061, 42.968], [16.061, 43.013]]]}, "properties": {"cell": "N42E016", "status": "new", "new_ha": 14.0, "again_ha": 0.0, "earlier_ha": 0.0, "land_ha": 246, "share": 0.057, "first_season": 2026, "latest_season": 2026}}]

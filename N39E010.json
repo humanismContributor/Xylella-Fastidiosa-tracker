@@ -1,0 +1,12 @@
+{
+ "cell": "N39E010",
+ "params_hash": "bfe043ed7734f775",
+ "skip": true,
+ "land_share": 0.0,
+ "masks": {
+  "worldcover": "ESA WorldCover 2021",
+  "olive_mask": null,
+  "worldcover_share_kept": 0.0
+ },
+ "checked": "2026-10-21"
+}

@@ -1,0 +1,57 @@
+{
+ "cell": "N34W010",
+ "bbox": [
+  -10,
+  34,
+  -9,
+  35
+ ],
+ "params_hash": "0ff0bc182458a66c",
+ "skip": false,
+ "done_through": 2026,
+ "land_share": 1.0,
+ "dates": {
+  "2019": 9,
+  "2020": 9,
+  "2021": 11,
+  "2022": 10,
+  "2023": 10,
+  "2024": 11,
+  "2025": 14,
+  "2026": 12
+ },
+ "seasons": {
+  "2022": {
+   "new_ha": 0.0,
+   "again_ha": 0.0,
+   "recovered_ha": 0.0
+  },
+  "2023": {
+   "new_ha": 0.0,
+   "again_ha": 0.0,
+   "recovered_ha": 0.0
+  },
+  "2024": {
+   "new_ha": 0.0,
+   "again_ha": 0.0,
+   "recovered_ha": 0.0
+  },
+  "2025": {
+   "new_ha": 0.0,
+   "again_ha": 0.0,
+   "recovered_ha": 0.0
+  },
+  "2026": {
+   "new_ha": 0.0,
+   "again_ha": 0.0,
+   "recovered_ha": 0.0
+  }
+ },
+ "masks": {
+  "worldcover": "no WorldCover tile found",
+  "olive_mask": null,
+  "burned_area": "MODIS burned area (MCD64A1): 0 cell-seasons excluded"
+ },
+ "checked": "2026-10-22",
+ "seconds": 261
+}
