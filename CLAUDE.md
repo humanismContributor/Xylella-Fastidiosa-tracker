@@ -40,14 +40,15 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   level or change, 0–2 K) to the current rule on every region with both tables, chooses and scores
   as `replay_rules.py` does, with 300 m blocks, plus site checks (heat in the first summer with data,
   within 1–2 km blocks and greenness quintiles). Writes `data/calibration/thermal_replay.json` /
-  `thermal_replay_ecostress.json` (aggregates only). First runs (Oct–Nov 2026, on the dati.puglia.it
-  2020–2023 tables of the two Monopoli regions), both sensors: as a filter it cuts false positives
-  but loses more true ones where the scanner works (Polignano, lag 1: ΔJ CI below 0), so not adopted.
-  Fasano: later positives sit on cells that were already hot in 2018, before the outbreak reached
-  them (AUC 0.90 Landsat / 0.88 ECOSTRESS; ~0.75 within 1 km blocks, 0.80–0.84 within greenness
-  classes): a standing property of the site (cause unknown: irrigation, soil, sampling), at most a
-  risk layer. Polignano: the sensors disagree (pre-outbreak heat AUC 0.63 Landsat, 0.44 ECOSTRESS
-  from 3 scenes). Re-run on the 2013–2025 campaign tables; untested out of sample as a risk predictor.
+  `thermal_replay_ecostress.json` (aggregates only). Both sensors, re-run Nov 2026 on the 2013–2025
+  campaign tables (five regions; Bisceglie has one positive and is skipped): as a filter it cuts
+  false positives but loses more true ones where the scanner works (Polignano, lag 1: ΔJ CI −0.31
+  to −0.06 Landsat, −0.34 to −0.15 ECOSTRESS) and adds nothing at Cagnano Varano (−0.03 to 0.00),
+  so not adopted. Later positives sit on cells that were already hot before (heat in the first summer
+  with data, Landsat / ECOSTRESS): Fasano 0.88 / 0.87 (0.75 / 0.73 within 1 km blocks), Cagnano Varano
+  0.76 / 0.63 (0.76 / 0.78 within blocks; outbreak found in 2025), not in Polignano (0.56 / 0.43) or
+  Ostuni (0.54 / 0.54; infected zone for years). A site property in some places only (cause unknown:
+  irrigation, soil, sampling), at most a local risk layer, untested out of sample.
 - `puglia_samples_check.py`: weekly check of the sampling dataset on dati.puglia.it (CKAN API,
   workflow `puglia_samples.yml`, state in `puglia_samples_seen.json`). Opens one issue when a file
   is added, gets a download link or changes date, with the steps to re-run the calibration; it
