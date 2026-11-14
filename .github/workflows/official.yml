@@ -41,7 +41,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          pip install anthropic==2.4.0
+          # The SDK is only needed when there is a key and something queued
+          if [ -n "$ANTHROPIC_API_KEY" ] && [ "$(jq '.leads | length' auto_leads.json)" != "0" ]; then
+            pip install anthropic==2.4.0
+          fi
           python auto_outbreaks.py
       - name: Save what has been seen
         # Also after a failed source, so the sources that worked keep their state

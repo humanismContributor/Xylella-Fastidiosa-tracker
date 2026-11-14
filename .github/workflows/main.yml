@@ -18,22 +18,42 @@ defaults:
     shell: bash -l {0}
 
 jobs:
-  # Read the list of enabled regions from regions.json
+  # Find the enabled regions that need a scan. From September to the next July every
+  # season is final, so most weeks nothing is due: those regions only get their
+  # last_checked date updated here, without installing the geospatial packages.
   plan:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     outputs:
       regions: ${{ steps.list.outputs.regions }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: List enabled regions
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install numpy
+
+      - name: List regions that need a scan
         id: list
-        run: echo "regions=$(jq -c '[.regions[] | select(.enabled != false) | .id]' regions.json)" >> "$GITHUB_OUTPUT"
+        run: echo "regions=$(python xylella_scanner.py --plan)" >> "$GITHUB_OUTPUT"
+
+      - name: Keep the updated check dates for the publish job
+        uses: actions/upload-artifact@v4
+        with:
+          name: checked
+          path: data/*/status.json
+          if-no-files-found: ignore
+          retention-days: 1
 
   # Scan each region in its own job (the first run rebuilds every summer since 2017)
   scan:
     needs: plan
+    if: ${{ needs.plan.outputs.regions != '[]' }}
     runs-on: ubuntu-latest
     timeout-minutes: 120
     strategy:
@@ -76,6 +96,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Download the updated check dates
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: checked
+          path: data
 
       - name: Download region results
         uses: actions/download-artifact@v4

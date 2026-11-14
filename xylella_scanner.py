@@ -282,11 +282,18 @@ def update_history(comps: dict, seasons, landmask, flagged, recovered,
         base_max = rules["baseline_osavi_max"]
     share = (rules or OLIVE_RULES)["recovery_share"]
     burned = burned or {}
+    bases: dict = {}  # each season's baseline is needed twice; a multi-year one is a full nanmedian
+
+    def base_of(s):
+        if s not in bases:
+            bases[s] = baseline(comps, s, baseline_years, max_spread)
+        return bases[s]
+
     for s in seasons:
         b = season_bit(s)
         flagged &= ~b
         cur = comps.get(s)
-        base, ok = baseline(comps, s, baseline_years, max_spread)
+        base, ok = base_of(s)
         if cur is None or base is None:
             continue
         m = decline_mask(cur, base, None, base_max, rules) & ok & landmask
@@ -296,7 +303,7 @@ def update_history(comps: dict, seasons, landmask, flagged, recovered,
     for s in sorted(comps):
         if comps.get(s) is None or comps.get(s + 1) is None:
             continue
-        base, _ = baseline(comps, s, baseline_years, max_spread)
+        base, _ = base_of(s)
         if base is None:
             continue
         b = season_bit(s)
@@ -554,6 +561,36 @@ def load_state(path: Path):
         return {"flagged": z["flagged"].copy(), "recovered": z["recovered"].copy(), **meta}
 
 
+def load_meta(path: Path):
+    """Only the metadata of a state file (the history arrays are not read)."""
+    if not path.exists():
+        return None
+    with np.load(path) as z:
+        return json.loads(str(z["meta"]))
+
+
+def is_final(region: dict, meta: dict | None, today: dt.date) -> bool:
+    """True when the region's latest season is already final under the current
+    parameters, so a scan would only update last_checked. Needs numpy only, so
+    the weekly workflow can decide without installing the geospatial packages.
+    The grid is not rebuilt here: bbox is in the hash, and the pixel size is checked."""
+    if not meta:
+        return False
+    latest, _ = latest_season(today, tuple(profile_rules(region.get("profile"))["season"]))
+    return (meta.get("params_hash") == params_hash(region)
+            and abs(float((meta.get("transform") or [0])[0])) == PIXEL_M
+            and meta.get("complete_through", 0) >= latest
+            and (DATA_DIR / region["id"] / "status.json").exists())
+
+
+def mark_checked(region: dict, today: dt.date) -> dict:
+    out = DATA_DIR / region["id"]
+    status = json.loads((out / "status.json").read_text())
+    status["last_checked"] = today.isoformat()
+    write_json(out / "status.json", status)
+    return status
+
+
 def save_state(path: Path, flagged, recovered, meta: dict) -> None:
     np.savez_compressed(path, flagged=flagged, recovered=recovered, meta=np.array(json.dumps(meta)))
 
@@ -578,12 +615,9 @@ def scan_region(region: dict, today: dt.date) -> dict:
     if state and not reuse:
         print("Parameters or area changed: rebuilding the full history.")
 
-    if reuse and state.get("complete_through", 0) >= latest and (out / "status.json").exists():
-        status = json.loads((out / "status.json").read_text())
-        status["last_checked"] = today.isoformat()
-        write_json(out / "status.json", status)
+    if reuse and is_final(region, state, today):
         print(f"{region['id']}: season {latest} already final, nothing new to scan.")
-        return status
+        return mark_checked(region, today)
 
     if reuse:
         flagged, recovered = state["flagged"], state["recovered"]
@@ -687,11 +721,26 @@ def main(argv=None) -> int:
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--region", help="region id from regions.json")
     g.add_argument("--all", action="store_true", help="scan every enabled region")
+    g.add_argument("--plan", action="store_true",
+                   help="print the enabled regions that need a scan as a JSON list, and update "
+                        "last_checked of the others (numpy only; used by the weekly workflow)")
     ap.add_argument("--today", help="pretend date (YYYY-MM-DD), for testing")
     args = ap.parse_args(argv)
 
     today = dt.date.fromisoformat(args.today) if args.today else dt.date.today()
     regions = load_regions()
+    if args.plan:
+        pending = []
+        for r in regions:
+            if not r.get("enabled", True):
+                continue
+            if is_final(r, load_meta(DATA_DIR / r["id"] / "state.npz"), today):
+                mark_checked(r, today)
+                print(f"{r['id']}: already final, skipped", file=sys.stderr)
+            else:
+                pending.append(r["id"])
+        print(json.dumps(pending))
+        return 0
     if args.all:
         todo = [r for r in regions if r.get("enabled", True)]
     else:

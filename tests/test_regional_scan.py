@@ -91,3 +91,22 @@ def test_missing_mask_stops_scan_and_keeps_results(env, monkeypatch):
     with pytest.raises(crop_masks.MaskError):
         xs.scan_region(region, dt.date(2026, 10, 21))
     assert not (env.out / "almond" / "zones.geojson").exists()
+
+
+def test_plan_skips_final_regions_without_loading(env, monkeypatch, capsys):
+    xs.scan_region(REGION, dt.date(2026, 10, 21))
+    meta = xs.load_meta(env.out / "test-region" / "state.npz")
+    assert xs.is_final(REGION, meta, dt.date(2026, 11, 9))
+    assert not xs.is_final(REGION, meta, dt.date(2027, 7, 20))     # next season is under way
+    assert not xs.is_final({**REGION, "bbox": [17.5, 40.7, 17.6, 40.8]}, meta, dt.date(2026, 11, 9))
+    assert not xs.is_final(REGION, None, dt.date(2026, 11, 9))
+
+    monkeypatch.setattr(xs, "load_regions", lambda: [REGION, {**REGION, "id": "unscanned"},
+                                                     {**REGION, "id": "off", "enabled": False}])
+    env.loads.clear()
+    capsys.readouterr()                              # drop the scan's own log lines
+    assert xs.main(["--plan", "--today", "2026-11-09"]) == 0
+    assert json.loads(capsys.readouterr().out) == ["unscanned"]
+    assert env.loads == []
+    status = json.loads((env.out / "test-region" / "status.json").read_text())
+    assert status["last_checked"] == "2026-11-09" and status["scan_date"] == "2026-10-21"
