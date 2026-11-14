@@ -36,6 +36,14 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install numpy
+      - name: Get the cell files from the basin-cells branch
+        run: |
+          mkdir -p data/basin/cells
+          if git fetch --depth 1 origin basin-cells; then
+            git archive FETCH_HEAD | tar -x -C data/basin/cells
+          else
+            echo "No basin-cells branch yet: every cell starts fresh."
+          fi
       - name: Find cells that still need this season
         id: plan
         run: |
@@ -67,6 +75,14 @@ jobs:
           activate-environment: xylella_env
           channels: conda-forge
           python-version: "3.11"
+      - name: Get the cell files from the basin-cells branch
+        run: |
+          mkdir -p data/basin/cells
+          if git fetch --depth 1 origin basin-cells; then
+            git archive FETCH_HEAD | tar -x -C data/basin/cells
+          else
+            echo "No basin-cells branch yet: every cell starts fresh."
+          fi
       - name: Install Geospatial Python Packages
         run: mamba install -y numpy scipy xarray dask rasterio pystac-client odc-stac odc-geo planetary-computer
       - name: Screen batch ${{ matrix.batch }}
@@ -92,6 +108,14 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install numpy
+      - name: Get the cell files from the basin-cells branch
+        run: |
+          mkdir -p data/basin/cells
+          if git fetch --depth 1 origin basin-cells; then
+            git archive FETCH_HEAD | tar -x -C data/basin/cells
+          else
+            echo "No basin-cells branch yet: every cell starts fresh."
+          fi
       - name: Collect finished cells
         uses: actions/download-artifact@v4
         continue-on-error: true
@@ -101,12 +125,28 @@ jobs:
           merge-multiple: true
       - name: Build basin map
         run: python basin_scanner.py --merge
-      - name: Commit
+      - name: Save the cell files to the basin-cells branch
+        # One commit that replaces the previous one: the cells are working state for the
+        # next run, the app never reads them, and keeping every version grew main by ~30 MB.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          tmp=$(mktemp -d)
+          cp -r data/basin/cells/. "$tmp"/
+          cd "$tmp"
+          git init -q -b basin-cells
+          git config user.name "Automated Satellite Bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Basin cell state ($(date -u +%F))"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" basin-cells
+      - name: Commit the basin map
         run: |
           set -e
           git config user.name "Automated Satellite Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/basin
+          git add data/basin/hotspots.geojson data/basin/summary.json
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
