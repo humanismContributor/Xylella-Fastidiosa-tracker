@@ -139,3 +139,24 @@ def test_evaluate_region_leaves_out_unjudged_cells(grid):
     grid["landmask"][10, 10] = True
     res = cal.evaluate_region({"id": "t", "name": "test"}, grid, samples)
     assert res["samples_on_grid"] == 1 and res["land_mask"] is True
+
+
+def test_flag_timing_separates_leads_from_later_flags():
+    b = xs.season_bit
+    bits = np.array([b(2020), b(2021), b(2022), 0, b(2020) | b(2023)], np.uint32)
+    seasons = np.array([2021, 2021, 2021, 2021, 2023])
+    t = cal.flag_timing(bits, seasons, complete_through=2023)
+    assert list(t) == ["before", "same_season", "only_after", "never", "before"]
+    # a flag after the last complete season is not counted
+    assert cal.flag_timing(np.array([b(2024)], np.uint32), np.array([2021]), 2023)[0] == "never"
+    c = cal.timing_counts(t, np.array([True, False, True, False, False]))
+    assert c["positive"]["trees"] == 2 and c["positive"]["only_after"]["n"] == 1
+    assert c["negative"]["before"]["share"] == pytest.approx(1 / 3, abs=1e-4)
+
+
+def test_evaluate_region_reports_flag_timing(grid):
+    grid["flagged"][10, 10] = xs.season_bit(2022)
+    samples = cal.read_samples(io.StringIO(CSV_HEADER + row("01/09/2021", 40.95, 17.25, result="Positivo")
+                                           + row("01/09/2022", 40.95, 17.25)))
+    ft = cal.evaluate_region({"id": "t", "name": "test"}, grid, samples)["flag_timing"]
+    assert ft["positive"]["only_after"]["n"] == 1 and ft["negative"]["same_season"]["n"] == 1
