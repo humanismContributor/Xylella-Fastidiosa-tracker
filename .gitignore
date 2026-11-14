@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Basin cell state lives on the basin-cells branch (see basin.yml)
+data/basin/cells/

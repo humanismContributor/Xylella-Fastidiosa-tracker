@@ -10,7 +10,10 @@ point to *Xylella fastidiosa*. Deployed on Streamlit Community Cloud from `main`
   the others just get `last_checked` updated. `state.npz` also keeps the land mask (cells the scan
   may judge); a state file without one gets a single job that adds it without re-judging any season.
 - `basin_scanner.py`: yearly 100 m screen of the olive belt in `basin.json`, in 1° cells
-  (workflow `basin.yml`, Sept–Nov, at most 16 parallel jobs so the weekly scan always gets a runner). Output in `data/basin/`.
+  (workflow `basin.yml`, Sept–Nov, at most 16 parallel jobs so the weekly scan always gets a runner). The map
+  files (`data/basin/hotspots.geojson`, `summary.json`) are on `main`; the per-cell state (`data/basin/cells/`,
+  ignored on `main`) lives on the `basin-cells` branch as one commit that each run replaces. To work on it
+  locally: `git fetch origin basin-cells && mkdir -p data/basin/cells && git archive FETCH_HEAD | tar -x -C data/basin/cells`.
 - `crop_masks.py`: parcel masks from farm registers (SIGPAC Balearics so far) for non-olive profiles.
 - `puglia_campaigns.py` (needs openpyxl): downloads the Osservatorio Fitosanitario's campaign
   workbooks (2013–2025, about 1.5 million samples, from the emergenzaxylella.it download page) and
