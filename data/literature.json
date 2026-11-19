@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-12",
+ "checked": "2026-11-19",
  "query": "xylella fastidiosa",
  "source": "OpenAlex (https://openalex.org), CC0",
  "seen_ids": [
@@ -308,9 +308,37 @@
   "W7225451399",
   "W7225569986",
   "W7225586989",
-  "W7225597456"
+  "W7225597456",
+  "W7228632362",
+  "W7233567608",
+  "W7234434338",
+  "W7235156134"
  ],
  "recent": [
+  {
+   "id": "W7234434338",
+   "title": "Xylella fastidiosa en cítricos colombianos (2025): qué se detectó y qué no está confirmado",
+   "date": "2026-11-16",
+   "type": "article",
+   "source": "Zenodo (CERN European Organization for Nuclear Research)",
+   "authors": "Lucas Mateo Tabares Franco",
+   "url": "https://doi.org/10.5281/zenodo.24283467",
+   "open_access_url": "https://doi.org/10.5281/zenodo.24283467",
+   "topics": [],
+   "places": []
+  },
+  {
+   "id": "W7118183507",
+   "title": "Current and future climatic suitability of Sonchus arvensis and Xylella fastidiosa under climate change scenarios",
+   "date": "2026-11-14",
+   "type": "article",
+   "source": "Journal of Plant Diseases and Protection",
+   "authors": "Emerson Cristi de Barros et al.",
+   "url": "https://doi.org/10.1007/s41348-026-01372-6",
+   "open_access_url": "https://link.springer.com/content/pdf/10.1007/s41348-026-01372-6.pdf",
+   "topics": [],
+   "places": []
+  },
   {
    "id": "W7225569986",
    "title": "Primi ritrovamenti di insetti xilemomizi positivi a Xylella fastidiosa subsp. multiplex nell'area del Monte Argentario",
@@ -381,6 +409,44 @@
    ]
   },
   {
+   "id": "W7228632362",
+   "title": "Machine Learning and Spectroscopy for Plant Health Monitoring: A Case Study on Xylella fastidiosa",
+   "date": "2026-11-01",
+   "type": "article",
+   "source": "Smart Agricultural Technology",
+   "authors": "Emanuele Chiaromonte et al.",
+   "url": "https://doi.org/10.1016/j.atech.2026.102743",
+   "open_access_url": "https://doi.org/10.1016/j.atech.2026.102743",
+   "topics": [
+    "Spread, outbreaks and surveillance",
+    "Detection and remote sensing",
+    "Hosts, vectors and control"
+   ],
+   "places": [
+    "Italy",
+    "Mediterranean",
+    "Puglia"
+   ]
+  },
+  {
+   "id": "W7233567608",
+   "title": "Epidemiological and mathematical modeling of vascular and wood‑decay pathogens in almond orchards: a conceptual and theoretical analysis",
+   "date": "2026-10-31",
+   "type": "article",
+   "source": "Plant Protection",
+   "authors": "Ioannis Vagelas",
+   "url": "https://doi.org/10.33804/pp.010.05.6245",
+   "open_access_url": "https://doi.org/10.33804/pp.010.05.6245",
+   "topics": [
+    "Spread, outbreaks and surveillance",
+    "Hosts, vectors and control"
+   ],
+   "places": [
+    "Greece",
+    "Mediterranean"
+   ]
+  },
+  {
    "id": "W7224617499",
    "title": "Inovação biotecnológica baseada na biodiversidade no desenvolvimento científico e tecnológico",
    "date": "2026-10-29",
@@ -435,20 +501,6 @@
    "authors": "Leticia Lucero-López et al.",
    "url": "https://doi.org/10.1128/aem.01745-26",
    "open_access_url": "https://doi.org/10.1128/aem.01745-26",
-   "topics": [
-    "Hosts, vectors and control"
-   ],
-   "places": []
-  },
-  {
-   "id": "W7221593660",
-   "title": "Accessory genome dynamics shape lineage-associated diversification in plum-associated Xylella fastidiosa subsp. multiplex",
-   "date": "2026-10-11",
-   "type": "article",
-   "source": "ISME Communications",
-   "authors": "Olakunle I. Olawole et al.",
-   "url": "https://doi.org/10.1093/ismeco/ycag291",
-   "open_access_url": "https://academic.oup.com/ismecommun/advance-article-pdf/doi/10.1093/ismeco/ycag291/71907741/ycag291.pdf",
    "topics": [
     "Hosts, vectors and control"
    ],
@@ -1005,7 +1057,7 @@
    "title": "Disseny i síntesi de lipopèptids, peptaibols i peptoides per al control de Xylella fastidiosa",
    "date": "2026-07-17",
    "type": "dissertation",
-   "source": "Universitat de Girona Digital Repository (Universitat de Girona)",
+   "source": "DUGiDocs (Universitat de Girona)",
    "authors": "Jordi Lamata Muñoz",
    "url": "https://openalex.org/W7221286351",
    "open_access_url": "",
@@ -1275,6 +1327,21 @@
    "places": []
   },
   {
+   "id": "W7136878836",
+   "title": "On-site amplification-free electrochemical detection of the plant pathogen Xylella fastidiosa via cathodic potential-induced DNA adsorption",
+   "date": "2026-06-15",
+   "type": "article",
+   "source": "The Analyst",
+   "authors": "Farjana Haque et al.",
+   "url": "https://doi.org/10.1039/d6an00096g",
+   "open_access_url": "https://hdl.handle.net/10072/441622",
+   "topics": [
+    "Spread, outbreaks and surveillance",
+    "Detection and remote sensing"
+   ],
+   "places": []
+  },
+  {
    "id": "W7164589523",
    "title": "Catch Me If You Can: How Xylella fastidiosa Thrives in the Xylem",
    "date": "2026-06-12",
@@ -1346,7 +1413,7 @@
    "source": "Phytopathology",
    "authors": "Miranda Tomás et al.",
    "url": "https://doi.org/10.1094/phyto-04-25-0141-r",
-   "open_access_url": "https://doi.org/10.1094/PHYTO-04-25-0141-R",
+   "open_access_url": "http://hdl.handle.net/10261/438079",
    "topics": [
     "Hosts, vectors and control"
    ],
@@ -1600,10 +1667,10 @@
   },
   {
    "id": "W7160280131",
-   "title": "Pathobiome",
+   "title": "Pathobiome: Driven Innovations in Sustainable Olive Disease Management",
    "date": "2026-05-05",
    "type": "article",
-   "source": "International Journal of Agriculture Innovations and Cutting-Edge Research (HEC Recognised)",
+   "source": "International Journal of Agriculture Innovations and Cutting-Edge Research",
    "authors": "Misbah-Ud-Din Ahmed et al.",
    "url": "https://doi.org/10.67244/jai.bwo-researches.v4i2.a235",
    "open_access_url": "https://jai.bwo-researches.com/index.php/jwr/article/download/235/211",
@@ -1820,72 +1887,6 @@
    "topics": [
     "Hosts, vectors and control"
    ],
-   "places": []
-  },
-  {
-   "id": "W7149913581",
-   "title": "1H NMR Approach for Evaluating the Effects of a Natural Detergent on Olive Trees Infected by Xylella fastidiosa subsp. pauca",
-   "date": "2026-04-03",
-   "type": "article",
-   "source": "Plants",
-   "authors": "Miriana Carla Fazzi et al.",
-   "url": "https://doi.org/10.3390/plants15071109",
-   "open_access_url": "https://www.mdpi.com/2223-7747/15/7/1109/pdf?version=1775218244",
-   "topics": [
-    "Hosts, vectors and control"
-   ],
-   "places": [
-    "Puglia"
-   ]
-  },
-  {
-   "id": "W7215592852",
-   "title": "Regolare la rigenerazione rurale: Il caso Xylella",
-   "date": "2026-04-01",
-   "type": "article",
-   "source": "P.A. Persona e Amministrazione",
-   "authors": "Giovanni D'Elia",
-   "url": "https://openalex.org/W7215592852",
-   "open_access_url": "https://journals.uniurb.it/index.php/pea/article/download/5702/4931",
-   "topics": [
-    "Spread, outbreaks and surveillance",
-    "Hosts, vectors and control"
-   ],
-   "places": [
-    "Italy",
-    "Puglia"
-   ]
-  },
-  {
-   "id": "W7143538409",
-   "title": "Host-plant range of different Xylella fastidiosa subspecies in experimental tests",
-   "date": "2026-03-30",
-   "type": "article",
-   "source": "Zenodo (CERN European Organization for Nuclear Research)",
-   "authors": "Marie-AgnĂ ̈S Jacques et al.",
-   "url": "https://doi.org/10.5281/zenodo.19335621",
-   "open_access_url": "https://doi.org/10.5281/zenodo.19335621",
-   "topics": [
-    "Spread, outbreaks and surveillance",
-    "Detection and remote sensing",
-    "Hosts, vectors and control"
-   ],
-   "places": [
-    "France",
-    "Italy",
-    "Spain"
-   ]
-  },
-  {
-   "id": "W7142677936",
-   "title": "Redefining Xylella fastidiosa cultivation: An improved growth system for faster physiological and antimicrobial studies",
-   "date": "2026-03-29",
-   "type": "article",
-   "source": "Journal of Microbiological Methods",
-   "authors": "Eduardo Costa-Camilo et al.",
-   "url": "https://doi.org/10.1016/j.mimet.2026.107477",
-   "open_access_url": "https://doi.org/10.1016/j.mimet.2026.107477",
-   "topics": [],
    "places": []
   }
  ]
