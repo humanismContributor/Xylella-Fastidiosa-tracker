@@ -17,7 +17,9 @@ auto_outbreaks.py, which adds positive findings to the map as not yet reviewed.
 Country status and the host list are still updated by hand. A source seen for the first time is only
 recorded. A source that can't be read is skipped for this run and makes the
 check fail at the end (GitHub emails the repository owner); the others still
-report.
+report. A server that is only down or rate-limiting (429, 5xx, timeouts, after
+retries that honour Retry-After) gives a warning instead, and fails the check
+only after UNAVAILABLE_WEEKS runs in a row (counted in official_seen.json).
 
 Standard library only. Usage:
     python official_check.py            # check and open issues (needs GITHUB_TOKEN, GITHUB_REPOSITORY)
@@ -61,9 +63,29 @@ OPENERS = {True: urllib.request.build_opener(COOKIES),
            False: urllib.request.build_opener(COOKIES, urllib.request.HTTPSHandler(context=ssl._create_unverified_context()))}
 
 
+class SourceUnavailable(RuntimeError):
+    """The server was down or rate-limiting us (429, 5xx, timeouts) through every retry: try next week."""
+
+
+# Rate limits and server-side errors; anything else (403, 410, ...) won't fix itself by waiting.
+TRANSIENT_CODES = {408, 425, 429}
+BACKOFF = (30, 90)         # seconds before the 2nd and 3rd try, unless the server sends Retry-After
+MAX_RETRY_AFTER = 180      # longer waits than this are cut, so one source can't eat the job's time
+UNAVAILABLE_WEEKS = 3      # a source unavailable this many runs in a row fails the check after all
+
+
+def retry_after(exc: urllib.error.HTTPError) -> int | None:
+    """The Retry-After header in seconds, if the server sent one as a number."""
+    value = (exc.headers or {}).get("Retry-After", "")
+    return min(int(value), MAX_RETRY_AFTER) if str(value).strip().isdigit() else None
+
+
 def fetch(url: str, verify: bool = True, tries: int = 3) -> bytes:
-    last = None
+    last, wait = None, None
     for i in range(tries):
+        if i:
+            time.sleep(wait if wait is not None else BACKOFF[min(i - 1, len(BACKOFF) - 1)])
+        wait = None
         try:
             req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
             with OPENERS[verify].open(req, timeout=60) as r:
@@ -71,15 +93,16 @@ def fetch(url: str, verify: bool = True, tries: int = 3) -> bytes:
         except urllib.error.HTTPError as exc:
             if exc.code == 404:
                 raise RuntimeError(f"{url} no longer exists (404); the source moved") from exc
-            last = exc
+            if exc.code not in TRANSIENT_CODES and exc.code < 500:
+                raise RuntimeError(f"could not fetch {url}: {exc}") from exc
+            last, wait = exc, retry_after(exc)
         except (urllib.error.URLError, TimeoutError) as exc:
             if "CERTIFICATE_VERIFY_FAILED" in str(exc):
                 raise RuntimeError(f"the certificate of {urllib.parse.urlparse(url).hostname} can't be verified "
                                    f"({getattr(exc, 'reason', exc)}); if you trust the site, tick 'read it without "
                                    "verifying the certificate' (\"verify_tls\": false)") from exc
             last = exc
-        time.sleep(10 * (i + 1))
-    raise RuntimeError(f"could not fetch {url}: {last}")
+    raise SourceUnavailable(f"{urllib.parse.urlparse(url).hostname} was unavailable after {tries} tries ({last})")
 
 
 def fetch_text(url: str, verify: bool = True) -> str:
@@ -175,17 +198,28 @@ def main(argv=None) -> int:
 
     saved = json.loads(SEEN_FILE.read_text()) if SEEN_FILE.exists() else {}
     states = dict(saved.get("sources", {}))
-    failed = []
+    streaks = dict(saved.get("unavailable", {}))   # runs in a row each source's server was unavailable
+    failed, unavailable = [], []
     for src in load_config()["sources"]:
         if a.only and src["id"] != a.only:
             continue
         seen = states.get(src["id"])
         try:
             state, updates = CHECKS[src["kind"]](src, seen)
+        except SourceUnavailable as exc:  # the site is down, not the entry: keep its state, retry next run
+            streaks[src["id"]] = streaks.get(src["id"], 0) + 1
+            if streaks[src["id"]] >= UNAVAILABLE_WEEKS:
+                print(f"FAILED {src['id']}: {exc}; unavailable {streaks[src['id']]} runs in a row")
+                failed.append(src["id"])
+            else:
+                print(f"::warning::{src['id']} skipped this run, will retry next run: {exc}")
+                unavailable.append(src["id"])
+            continue
         except Exception as exc:  # one broken source must not hide the others
             print(f"FAILED {src['id']}: {exc}")
             failed.append(src["id"])
             continue
+        streaks.pop(src["id"], None)
         states[src["id"]] = state
         if seen is None:
             print(f"First run for {src['id']}: recorded.")
@@ -201,8 +235,12 @@ def main(argv=None) -> int:
 
     if not a.dry_run:
         # Keeps other keys, such as the pages discover_sources.py has already suggested
-        SEEN_FILE.write_text(json.dumps({**saved, "checked": dt.date.today().isoformat(), "sources": states},
-                                        indent=1, ensure_ascii=False) + "\n")
+        out = {**saved, "checked": dt.date.today().isoformat(), "sources": states, "unavailable": streaks}
+        if not streaks:
+            out.pop("unavailable")
+        SEEN_FILE.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
+    if unavailable:
+        print(f"Server unavailable, will retry next run: {', '.join(unavailable)}.")
     if failed:
         print(f"Could not read: {', '.join(failed)}. Check their entries in official_sources.json.")
         return 1
